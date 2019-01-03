@@ -1,0 +1,1 @@
+function c = filtrax_nan(S,L,H,Fs)SS=S;inotnan=find(isnan(S)==0);S=S(inotnan);if length(inotnan)<200,    c=nanmean(SS);    returnendS=detrend(S);[b,a]=butter(2,[L H]*2/Fs);[H,w]=freqz(b,a,512);c=filtfilt(b,a,S);SS(inotnan)=c;c=SS;

@@ -1,0 +1,5 @@
+su ubuntu 16.04 LTS per postare roba su regOBS c'e' bisogno di installare il pacchetto requests di python utilizzando pip
+1) installa pip
+sudo python get-pip.py
+2) intalla requets
+sudo pip install requests

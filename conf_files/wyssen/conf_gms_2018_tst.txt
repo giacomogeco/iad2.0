@@ -1,0 +1,136 @@
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%% STATION PARAMETERS %%%%%%%%%%%%%%%%%%
+station.name='gms';
+station.smp=[50 50 50 50];
+station.chname={'m1','m2','m3','m4'};
+station.advoltage=5;   %... Volt
+station.adbit=16;       %... bit
+station.gain=[.2 .2 .2 .2];
+station.filter=[.1 10;.1 10;.1 10;.1 10];
+station.drumshift=[1 1 1 1];    %... UM
+station.resampling=[1 1 1 1];
+station.figuresdir='/figures/';
+station.network='WYSSEN IDA Network';
+station.legend={'Pa','Pa','Pa','Pa'};
+station.legendvalue={'1','1','1','1'};
+station.amplification=[1 1 1 1];
+station.noisezones=[];
+station.spikeremove=[0 50];
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%% WINSTON PARAMETERS %%%%%%%%%%%%%%%%%%
+station.wslocation='';
+station.wschannels={'m1','m2','m3','m4'};	% !!!!!!!!! NB intorto per stazioni Beni
+station.wsnetwork='';
+station.wsstation='';
+station.wspinnumber={};
+station.wsserver='';
+station.wsport=0;
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%% WYSSEN SERVER PARAMETERS %%%%%%%%%%%%%%%
+station.key='zC8AqKrpAw-8tHawJGiDT-R80ab1PRic';
+station.limit='100000000000';
+station.struct='true';
+station.json='false';
+station.server='https://control.wyssenavalanche.com/app/api/ida/raw.php?';
+station.id=[7971 7975 7979 7983];
+station.sid=7987;
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%% PROCESSING PARAMETERS & LOGFILES %%%%%%%%%%%%%%%%%%
+station.clockoffset=0;
+station.det2dB_flag=false;
+station.lag=10; % il 40-esimo secondo del minuto esatto
+station.last5min_det_file=[station.name,'_last5min_det.mat'];
+station.eventfile=[station.name,'_events.mat'];
+station.logfile=[station.name,'.log'];
+station.elab_logfile=[station.name,'_last5min_det.log'];
+station.mail_ex_logfile=[station.name,'_ex_mail.log'];
+station.mail_av_logfile=[station.name,'_av_mail.log'];
+station.mail_pub_logfile=[station.name,'_pub_mail.log'];
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%% MCCA %%%%%%%%%%%%%%%%%%
+station.arrayfile='IDA-BLZ-2018.mat';		%…coordinate
+station.sensors=[1 1 1 1];
+%	——> EXPLOSIONS DETECTIONS <——
+station.ex_resampling=1;
+station.ex_minconsistency=0.07;
+station.ex_window=5;
+station.ex_shift=0.3;
+station.ex_taper=20;
+station.ex_frequencyband=[1 15];
+station.ex_min_dets_length=4;
+station.ex_min_dets_continuity=0.31;
+station.ex_trplts='';                
+station.ex_maxlag=0.6;  	%... seconds                
+station.ex_filterorder=3;                     
+station.ex_filterripple=0.02; 
+station.ex_azmaxstd=30;		%... degree, massima deviazione standard tra i triangoli
+%	——> AVALANCHES DETECTIONS <—-
+station.av_resampling=1;
+station.av_minconsistency=0.05;
+station.av_window=5;
+station.av_shift=0.5;
+station.av_taper=20;
+station.av_frequencyband=[1 10];
+station.av_min_dets_length=6;
+station.av_min_dets_continuity=3.05;
+station.av_trplts='';                
+station.av_maxlag=0.6;  	%... seconds                
+station.av_filterorder=4;
+station.av_filterripple=0.02; 
+station.av_azmaxstd=20;		%... degree, massima deviaszione standard tra i triangoli
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%% EXPLOSIONS & CONTROLLED AVALANCHES EVENTS & Towers %%%%%%%%%%%%%%%%%%
+station.ExplYes=1;
+%%%>>>>>>>>>>>>>>>>>>>>>>>> #TODO piu settori Wiler
+station.twr_baz=[285,295;302,330;125,135];			% °N respect to the array central element position
+station.twr_name={'Schwarz-Brunnen GazEx','Wiler','Schmallbach GazEx'};	% nomi torri
+station.ex_minpressure=0.5;						% Pa, Soglia di ampiezza delle esplosioni
+station.ex_index=[10,38];						% Pa, Soglia di ampiezza delle esplosioni
+station.ex_maxappvel=600;                   % m/s, Soglia di velocità apparente
+station.cav_maxlag=2;                       % min,lag max tra un'esplosione ed una Controlled Avalanches 
+station.cav_minlag=10;
+station.cav_minpressure=0;
+station.cav_azlag=15;                       % N°, differenza assoluta tra l'azimuth medio dell'esplosione e l'azimuth della potenziale valanga
+station.cav_minduration=5;                 % sec, durata minima di una valanga controllata
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%% AVALANCHES EVENTS %%%%%%%%%%%%%%%%%%
+%%%>>>>>>>>>>>>>>>>>>>>>>>> #TODO soglie ampiezza
+station.nav_minpressure=[0.1 0.1];     % Pa, pressione minima di un evento naturale
+station.nav_mindur=[20 40];          % sec, durata minima di un evento naturale
+station.nav_maxvel=[550 550];         % m/s, velocità media massima di un evento naturale
+station.nav_meanvel=[380 380];         % m/s, velocità media di un evento naturale
+station.nav_minvel=[280 280];		% °, min velocity di un evento naturale
+station.nav_maxbazstd=[100 100];		% °, std of backazimuths di un evento naturale
+station.nav_maxveltrend=[0 -0.3];		% °, std of backazimuths di un evento naturale
+station.nav_shadowzones=[225 270;30,50];
+station.zonefilename='';
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%% MYSQL PARAMETER %%%%%%%%%%%%%%%%%%
+station.dB_Nav_name=[lower(station.name),'_natural'];
+station.dB_Ex_name=[lower(station.name),'_explosions'];
+station.dB_Cav_name=[lower(station.name),'_avalanches'];
+station.dBhost='localhost';
+station.dBuser='wwsuser';
+station.dBpassword='wwspass';
+station.dBname='W_events';
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%% ALERT MAILS & SMS %%%%%%%%%%%%%%%%%%
+station.mailserver='mail.item-geophysics.it';
+station.mailsender='notifications@item-geophysics.it';
+station.mailsenderpsw='Wave*Worm*17';
+station.mail_avalanches_flag=0;
+station.mail_explosions_flag=0;
+station.mailing_list_item={'IAD@smshosting.it'};
+station.mailing_list_customer={};
+station.sms_avalanches_flag=0;
+station.sms_explosions_flag=0;
+station.sms_list_item={};
+%station.sms_list_customer={'GOMS@smshosting.it'};
+station.sms_list_customer={};
+station.mailthreshold_minpressure=station.nav_minpressure(2);
+station.mailthreshold_minduration=station.nav_mindur(2);                           %... seconds
+station.mailstring={''};
+station.bazmail=[0,359];
+
+
+
