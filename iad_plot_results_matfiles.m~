@@ -349,7 +349,7 @@ plot(Ex.timeS,Ex.bkz,'.b'),grid on
 hold on
 plot(Av.timeS,Av.bkz,'Ob')
 ylabel('Back-azimuth (?N)')
-% set(axx3,'ylim',[Ev_Nav.data(1,20])
+set(axx3,'ylim',[])
 
 axx(5)=subplot(515);set(axx(5),'FontName','Bitstream charter','fontSize',14)
 plot(Ex.timeS,Ex.vel,'.r'),grid on

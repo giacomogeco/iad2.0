@@ -1,4 +1,6 @@
 function iad(net,namestz,ConfFileName,offline)
+
+close all
 % clear all,close all,clear function,
 % clear global
 % clear all
@@ -22,8 +24,8 @@ load(['~/',namestz,'_temp.mat'])
 %%%%%%%%% MODALITY TYPE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % offline=1;		%... offline (1) or realtime (0) analysis 
 %%%%%%%%% SCEGLI IL TIPO DI FILES %%%%%%%%%%%%
-offlinefiletypes={'gcf','mat','mseed'};
-offlinefiletypes=char(offlinefiletypes(2));
+offlinefiletypes={'gcf','mat','mseed',''};
+offlinefiletypes=char(offlinefiletypes(4));
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 if offline
 	cmdstring=['rm ',working_dir,'/tmp/*.mat'];
