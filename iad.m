@@ -662,20 +662,18 @@ while 1,
     if size(Ev_Cav.data,1)>0,
 		disp('Cav Detected')
         %%%%%%%%%% WYSSEN POST
-        if offline==0
-            try
-                for iPst=1:size(Ev_Cav.data,1)
-                evnts.data=Ev_Cav.data(iPst,:);
-                [postStatus,postResponse] = iadEvent2Wyssen(station,evnts,'Cav');
-                    if postStatus==0
-                            disp('>>>>>>>>>> Wyssen Cav Post OK <<<<<<<<<<<<')
-                    else
-                            disp('>>>>>>>>>> !!!!!!!!! WARNING POSTING CAV EVENT !!!!!!!!!!!!! <<<<<<<<<<<<')
-                    end
+        try
+            for iPst=1:size(Ev_Cav.data,1)
+            evnts.data=Ev_Cav.data(iPst,:);
+            [postStatus,postResponse] = iadEvent2Wyssen(station,evnts,'Cav',offline);
+                if postStatus==0
+                        disp('>>>>>>>>>> Wyssen Cav Post OK <<<<<<<<<<<<')
+                else
+                        disp('>>>>>>>>>> !!!!!!!!! WARNING POSTING CAV EVENT !!!!!!!!!!!!! <<<<<<<<<<<<')
                 end
-            catch
-
             end
+        catch
+
         end
         %%%%%%%%%%% end WYSSEN POST
         
@@ -725,20 +723,18 @@ while 1,
     if size(Ev_Nav.data,1)>0,
 		disp('Nav Detected')   
         %%%%%%%%%% WYSSEN POST 
-        if offline==0
-            try                  
-                for iPst=1:size(Ev_Nav.data,1)
-                    evnts.data=Ev_Nav.data(iPst,:);
-                    [postStatus,postResponse] = iadEvent2Wyssen(station,evnts,'Nav');  
-                    if postStatus==0
-                            disp('>>>>>>>>>> Wyssen NAV Post OK <<<<<<<<<<<<')
-                    else
-                            disp('>>>>>>>>>> !!!!!!!!! WARNING POSTING NAV EVENT !!!!!!!!!!!!! <<<<<<<<<<<<')
-                    end
-                end                 
-            catch 
+        try                  
+            for iPst=1:size(Ev_Nav.data,1)
+                evnts.data=Ev_Nav.data(iPst,:);
+                [postStatus,postResponse] = iadEvent2Wyssen(station,evnts,'Nav',offline);  
+                if postStatus==0
+                        disp('>>>>>>>>>> Wyssen NAV Post OK <<<<<<<<<<<<')
+                else
+                        disp('>>>>>>>>>> !!!!!!!!! WARNING POSTING NAV EVENT !!!!!!!!!!!!! <<<<<<<<<<<<')
+                end
+            end                 
+        catch 
 
-            end
         end
         %%%%%%%%%% end WYSSEN POST
         
@@ -788,22 +784,22 @@ while 1,
     if size(Ev_Ex.data,1)>0,
 		disp('Ex detected')
         %%%%%%%%% WYSSEN POST
-        if offline==0
-            try
-                for iPst=1:size(Ev_Ex.data,1)
-                    evnts.data=Ev_Ex.data(iPst,:);
-                    evnts.torretta=Ev_Ex.torretta(iPst);
-                    [postStatus,postResponse] = iadEvent2Wyssen(station,evnts,'Ex');
-                    if postStatus==0
-                            disp('>>>>>>>>>> Wyssen EX Post OK <<<<<<<<<<<<')
-                    else
-                            disp('>>>>>>>>>> !!!!!!!!! WARNING POSTING EX EVENT !!!!!!!!!!!!! <<<<<<<<<<<<')
-                    end
+        
+        try
+            for iPst=1:size(Ev_Ex.data,1)
+                evnts.data=Ev_Ex.data(iPst,:);
+                evnts.torretta=Ev_Ex.torretta(iPst);
+                [postStatus,postResponse] = iadEvent2Wyssen(station,evnts,'Ex',offline);
+                if postStatus==0
+                        disp('>>>>>>>>>> Wyssen EX Post OK <<<<<<<<<<<<')
+                else
+                        disp('>>>>>>>>>> !!!!!!!!! WARNING POSTING EX EVENT !!!!!!!!!!!!! <<<<<<<<<<<<')
                 end
-            catch
-
             end
+        catch
+
         end
+        
         %%%%%%%%% end WYSSEN POST
         
         %%%%%%%%%% DB
