@@ -78,7 +78,7 @@ station.av_trplts='';
 station.av_maxlag=0.6;  	%... seconds                
 station.av_filterorder=3;
 station.av_filterripple=0.02; 
-station.av_azmaxstd=20;		%... degree, massima deviaszione standard tra i triangoli
+station.av_azmaxstd=60;		%... degree, massima deviaszione standard tra i triangoli
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	%%%%%%%%%%%%%%%%% EXPLOSIONS & CONTROLLED AVALANCHES EVENTS & Towers %%%%%%%%%%%%%%%%%%
 %TODO gun position
@@ -99,11 +99,11 @@ station.cav_minduration=10;                 % sec, durata minima di una valanga 
 station.nav_minpressure=[0.07 0.1];     % Pa, pressione minima di un evento naturale
 station.nav_mindur=[30 40];          % sec, durata minima di un evento naturale
 station.nav_maxvel=[600 600];         % m/s, velocità media massima di un evento naturale
-station.nav_meanvel=[380 380];         % m/s, velocità media di un evento naturale
+station.nav_meanvel=[390 390];         % m/s, velocità media di un evento naturale
 station.nav_minvel=[280 280];		% °, min velocity di un evento naturale
 station.nav_maxbazstd=[100 100];		% °, std of backazimuths di un evento naturale
 station.nav_maxveltrend=[0 -0.3];		% °, std of backazimuths di un evento naturale
-station.nav_shadowzones=[65,75;];
+station.nav_shadowzones=[65 75];
 station.zonefilename='';
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	%%%%%%%%%%%%%%%%%% MYSQL PARAMETER %%%%%%%%%%%%%%%%%%

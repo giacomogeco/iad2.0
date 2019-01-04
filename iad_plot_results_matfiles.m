@@ -89,12 +89,13 @@ end
 
 
 
-
+size(M)
+iactive=station.sensors==1;
+M=M(iactive,:);
+size(M)
 tt0=tv;
 Ms=sum(M,1);i=isfinite(Ms);M=M(:,i);tt=tv(i);
 
-iactive=station.sensors==1;
-M=M(iactive,:);
 
 F=station.ex_frequencyband;
 % F=[1 5];
