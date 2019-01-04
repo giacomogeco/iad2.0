@@ -1,4 +1,4 @@
-function [status,result] = iadEvent2Wyssen(station,Event,Type)
+function [status,result] = iadEvent2Wyssen(station,Event,Type,offline)
 
 % Event=evnts;
 % Type='Ex';
@@ -96,7 +96,12 @@ fwrite(fid,'print(r.content)');
 fclose(fid);
 
 % disp(['python ',wys.logdir,wys.logfilename,' &'])
-[status,result] = system(['python ',wys.logdir,wys.logfilename,' &']);
+if offline==0
+    [status,result] = system(['python ',wys.logdir,wys.logfilename,' &']);
+else
+    status=NaN;
+    result=NaN;
+end
 
 
 return
