@@ -1,4 +1,4 @@
-function iad(net,namestz,ConfFileName,offline)
+function iad(net,namestz,ConfFileName)
 % clear all,close all,clear function,
 % clear global
 % clear all
@@ -11,7 +11,7 @@ function iad(net,namestz,ConfFileName,offline)
 % ConfFileName='conf_no2_2017_priv.txt'
 warning off
 
-save(['~/',namestz,'_temp.mat'],'net','namestz','ConfFileName','offline')
+save(['~/',namestz,'_temp.mat'],'net','namestz','ConfFileName')
 %%%%%%%%%% SET PATHS %%%%%%%%%%%
 global working_dir slh
 [working_dir,slh]=iad_setpath;
@@ -20,7 +20,7 @@ global working_dir slh
 load(['~/',namestz,'_temp.mat'])
 
 %%%%%%%%% MODALITY TYPE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% offline=1;		%... offline (1) or realtime (0) analysis 
+offline=1;		%... offline (1) or realtime (0) analysis 
 %%%%%%%%% SCEGLI IL TIPO DI FILES %%%%%%%%%%%%
 offlinefiletypes={'gcf','mat','mseed'};
 offlinefiletypes=char(offlinefiletypes(2));
