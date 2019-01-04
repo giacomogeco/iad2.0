@@ -244,6 +244,7 @@ for i=1:nh,
 end
 
 % filename='/Users/giacomo/Documents/item/matlab/iad_av_detector/detections/gms_Det_Av/gms_20160229/gms_20160229_170000_3ch.csv'
+global Ex Av
 Ex.prs=[];Ex.bkz=[];Ex.bkzsd=[];Ex.vel=[];Ex.velsd=[];Ex.smb=[];
 Ex.fpk=[];Ex.cns=[];Ex.time=[];Ex.iex=[];
 Av=Ex;
