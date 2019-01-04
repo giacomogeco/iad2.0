@@ -158,6 +158,17 @@ for i=1:size(M,1)
     p1=plot(tts,Mf(i,:)+(i-1)*mxx,'color',[.7 .7 .7]);hold on
 end
 
+if Ev_Av.data(1,1)~=0,
+    plot(86400*(Ev_Av.data(:,1)-T0),zeros(size(Ev_Av.data,1),1),'dc','Linewidth',2)
+    hold on
+    for i=1:size(Ev_Av.data,1),
+        
+        line([86400*(Ev_Av.data(i,1)-T0),86400*(Ev_Av.data(i,2)-T0)],...
+         [0,0],'color','c','Linewidth',2)
+    end
+else
+    line([0,0],[0,0],'color','c','Linewidth',2)
+end
 
 leg_string{1}='Infrasound';
 if size(Ev_Ex.data,1)>0,
@@ -186,17 +197,7 @@ end
 leg_string{3}='Controlled Avalanches';
 
 
-if Ev_Av.data(1,1)~=0,
-    plot(86400*(Ev_Av.data(:,1)-T0),zeros(size(Ev_Av.data,1),1),'dc','Linewidth',2)
-    hold on
-    for i=1:size(Ev_Av.data,1),
-        
-        line([86400*(Ev_Av.data(i,1)-T0),86400*(Ev_Av.data(i,2)-T0)],...
-         [0,0],'color','c','Linewidth',2)
-    end
-else
-    line([0,0],[0,0],'color','c','Linewidth',2)
-end
+
 
 if size(Ev_Nav.data,1)>0,
     plot(86400*(Ev_Nav.data(:,1)-T0),zeros(size(Ev_Nav.data,1),1),'dg','Linewidth',2)

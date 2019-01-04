@@ -78,16 +78,15 @@ station.av_trplts='';
 station.av_maxlag=0.6;  	%... seconds                
 station.av_filterorder=3;
 station.av_filterripple=0.02; 
-station.av_azmaxstd=20;		%... degree, massima deviaszione standard tra i triangoli
+station.av_azmaxstd=70;		%... degree, massima deviaszione standard tra i triangoli
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	%%%%%%%%%%%%%%%%% EXPLOSIONS & CONTROLLED AVALANCHES EVENTS & Towers %%%%%%%%%%%%%%%%%%
 station.ExplYes=1;
-%station.twr_baz=[70,80;210,220]; % 1 !!!
-station.twr_baz=[250,260;180,190]; % tuned GP10 2018-12-19
+station.twr_baz=[235,260;180,190]; % tuned GP10 2018-12-19
 station.twr_name={'GP10','GP9'};	% nomi torri
 station.ex_minpressure=0.1;						% Pa, Soglia di ampiezza delle esplosioni
 station.ex_index=[10,25];	%% NB CANADA GUN	% Pa, Soglia di ampiezza delle esplosioni
-station.ex_maxappvel=335;                   % m/s, Soglia di velocità apparente
+station.ex_maxappvel=550;                   % m/s, Soglia di velocità apparente
 station.cav_maxlag=2;                       % min,lag max tra un'esplosione ed una Controlled Avalanches 
 station.cav_minlag=8;
 station.cav_minpressure=0.05;
