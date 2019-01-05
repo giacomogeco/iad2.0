@@ -72,19 +72,18 @@ station.av_shift=0.5;
 station.av_taper=20;
 station.av_frequencyband=[1 5];
 station.av_min_dets_length=10;		%% NB canadian gun
-%station.av_min_dets_continuity=3.05;
 station.av_min_dets_continuity=1.55;	% tuned on dec 21 2018
 station.av_trplts='';                
 station.av_maxlag=0.6;  	%... seconds                
 station.av_filterorder=3;
 station.av_filterripple=0.02; 
-station.av_azmaxstd=70;		%... degree, massima deviaszione standard tra i triangoli
+station.av_azmaxstd=90;		%... degree, massima deviaszione standard tra i triangoli
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	%%%%%%%%%%%%%%%%% EXPLOSIONS & CONTROLLED AVALANCHES EVENTS & Towers %%%%%%%%%%%%%%%%%%
 station.ExplYes=1;
 station.twr_baz=[235,260;180,190]; % tuned GP10 2018-12-19
 station.twr_name={'GP10','GP9'};	% nomi torri
-station.ex_minpressure=0.1;						% Pa, Soglia di ampiezza delle esplosioni
+station.ex_minpressure=0.05;						% Pa, Soglia di ampiezza delle esplosioni
 station.ex_index=[10,25];	%% NB CANADA GUN	% Pa, Soglia di ampiezza delle esplosioni
 station.ex_maxappvel=550;                   % m/s, Soglia di velocità apparente
 station.cav_maxlag=2;                       % min,lag max tra un'esplosione ed una Controlled Avalanches 
@@ -94,11 +93,11 @@ station.cav_azlag=360;                       % N°, differenza assoluta tra l'az
 station.cav_minduration=10;                 % sec, durata minima di una valanga controllata
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	%%%%%%%%%%%%%%%%%% AVALANCHES EVENTS %%%%%%%%%%%%%%%%%%
-station.nav_minpressure=[0.1 0.1];     % Pa, pressione minima di un evento naturale
-station.nav_mindur=[20 40];          % sec, durata minima di un evento naturale
+station.nav_minpressure=[0.07 0.1];     % Pa, pressione minima di un evento naturale
+station.nav_mindur=[30 40];          % sec, durata minima di un evento naturale
 station.nav_maxvel=[600 600];         % m/s, velocità media massima di un evento naturale
 station.nav_meanvel=[380 380];         % m/s, velocità media di un evento naturale
-station.nav_minvel=[280 280];		% °, min velocity di un evento naturale
+station.nav_minvel=[200 200];		% °, min velocity di un evento naturale
 station.nav_maxbazstd=[100 100];		% °, std of backazimuths di un evento naturale
 station.nav_maxveltrend=[0 -0.3];		% °, std of backazimuths di un evento naturale
 station.nav_shadowzones=[65,75];

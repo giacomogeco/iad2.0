@@ -14,7 +14,7 @@ else
 end
 
 
-iad_events2dB_delete(tablename,datestr(date,31),station) %GMT+1h
+% iad_events2dB_delete(tablename,datestr(date,31),station) %GMT+1h
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Sul Database... before 2017-2018
 % T 	Date 	PRS 	CO 	D 	BAZ 	BAZd 	SLW 	SLWd 	FP 	RS 	SNR 	PROBABILITY 

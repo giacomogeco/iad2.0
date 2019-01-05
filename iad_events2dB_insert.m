@@ -34,7 +34,8 @@ for i=1:size(Mpriv,1)
      switch tag
          case 'explosions'
              disp(['Explosions, ',char(torretta(i))])
-             query=['insert into ',tablename,' values (''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'')'];
+%              query=['insert into ',tablename,' values (''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'')'];
+             query=['replace into ',tablename,' values (''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'')'];
              
 %              fprintf(query,...
 %              num2str((Mpriv(i,1)-datenum(1970,1,0))*86400),...
@@ -82,7 +83,8 @@ for i=1:size(Mpriv,1)
          
          otherwise
              disp('Avalanche')
-             query=['insert into ',tablename,' values (''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'')'];
+%              query=['insert into ',tablename,' values (''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'')'];
+             query=['replace into ',tablename,' values (''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'',''%s'')'];
              mysql(sprintf(query,...
              num2str((Mpriv(i,1)-datenum(1970,1,0))*86400),...
              datestr(Mpriv(i,1),31),...

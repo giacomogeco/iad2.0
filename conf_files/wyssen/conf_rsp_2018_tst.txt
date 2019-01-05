@@ -78,14 +78,13 @@ station.av_trplts='';
 station.av_maxlag=0.6;  	%... seconds                
 station.av_filterorder=3;
 station.av_filterripple=0.02; 
-station.av_azmaxstd=160;		%... degree, massima deviaszione standard tra i triangoli
+station.av_azmaxstd=60;		%... degree, massima deviaszione standard tra i triangoli
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	%%%%%%%%%%%%%%%%% EXPLOSIONS & CONTROLLED AVALANCHES EVENTS & Towers %%%%%%%%%%%%%%%%%%
 station.ExplYes=1;
-%station.twr_baz=[40,50;240,250;75,85]; % 1
 station.twr_baz=[30,50;230,250]; % 2 tuned 2018-12-14
-station.twr_name={'GP11','GP12-GP13'};	% nomi torri
-station.ex_minpressure=0.1;						% Pa, Soglia di ampiezza delle esplosioni
+station.twr_name={'GP11','GP12'};	% nomi torri
+station.ex_minpressure=0.05;						% Pa, Soglia di ampiezza delle esplosioni
 station.ex_index=[10,25];						% Pa, Soglia di ampiezza delle esplosioni
 station.ex_maxappvel=340;                   % m/s, Soglia di velocità apparente
 station.cav_maxlag=2;                       % min,lag max tra un'esplosione ed una Controlled Avalanches 
@@ -101,7 +100,7 @@ station.nav_maxvel=[600 600];         % m/s, velocità media massima di un event
 station.nav_meanvel=[380 380];         % m/s, velocità media di un evento naturale
 station.nav_minvel=[280 280];		% °, min velocity di un evento naturale
 station.nav_maxbazstd=[100 100];		% °, std of backazimuths di un evento naturale
-station.nav_maxveltrend=[0 -.3];		% °, std of backazimuths di un evento naturale
+station.nav_maxveltrend=[0 -0.3];		% °, std of backazimuths di un evento naturale
 station.nav_shadowzones=[60,85;243,253];
 station.zonefilename='';
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

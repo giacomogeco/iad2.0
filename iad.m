@@ -7,22 +7,17 @@ close all
 % net='wyssen';
 % namestz='hrm';
 % ConfFileName='conf_hrm_2018_tst.txt';
-% clear all
-% net='wyssen'
-% namestz='no2'
-% ConfFileName='conf_no2_2017_priv.txt'
+% offline=1;
+
+
 warning off
 
 save(['~/',namestz,'_temp.mat'],'net','namestz','ConfFileName','offline')
 %%%%%%%%%% SET PATHS %%%%%%%%%%%
 global working_dir slh
 [working_dir,slh]=iad_setpath;
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 load(['~/',namestz,'_temp.mat'])
-
-%%%%%%%%% MODALITY TYPE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% offline=1;		%... offline (1) or realtime (0) analysis 
 %%%%%%%%% SCEGLI IL TIPO DI FILES %%%%%%%%%%%%
 offlinefiletypes={'gcf','mat','mseed',''};
 offlinefiletypes=char(offlinefiletypes(4));
@@ -272,8 +267,8 @@ while 1,
 
 		
         if ~isempty(Det_Ex.data),
-            iv=Det_Ex.data(:,5)>250;
-            Det_Ex.data=Det_Ex.data(iv,:);
+%             iv=Det_Ex.data(:,5)>250;
+%             Det_Ex.data=Det_Ex.data(iv,:);
         end
 			
 	
@@ -282,8 +277,8 @@ while 1,
         Det_Av=iad_mcc_analysis(tt,M,station,slh,working_dir,'avalanches');
 		
 		if ~isempty(Det_Av.data),
-			iv=Det_Av.data(:,5)>250;
-			Det_Av.data=Det_Av.data(iv,:);
+% 			iv=Det_Av.data(:,5)>250;
+% 			Det_Av.data=Det_Av.data(iv,:);
         end
         
         %... remove detections from stationary noise zones
@@ -807,6 +802,7 @@ while 1,
             iad_refresh_database(station.dB_Ex_name,Ev_Ex.data,Ev_Ex.torretta,tt(end)-900/86400,...
                     station)
         catch
+            
                 disp('!!!!!!!!!!!!!! ERROR POPULATING Ex dB')
         end
         %%%%%%%%%%% end DB
@@ -882,7 +878,7 @@ while 1,
     
     if offline==1
         toc
-        iad_plot_results_matfiles
+%         iad_plot_results_matfiles
         break
     end
 %       pause(60)      
