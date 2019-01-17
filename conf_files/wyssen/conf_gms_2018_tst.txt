@@ -83,7 +83,7 @@ station.av_azmaxstd=20;		%... degree, massima deviaszione standard tra i triango
 station.ExplYes=1;
 %%%>>>>>>>>>>>>>>>>>>>>>>>> #TODO piu settori Wiler
 station.twr_baz=[285,295;302,330;125,135];			% °N respect to the array central element position
-station.twr_name={'Schwarz-Brunnen GazEx','Wiler','Schmallbach GazEx'};	% nomi torri
+station.twr_name={'Schwarz-Brunnen','Wiler','Schmallbach GazEx'};	% nomi torri
 station.ex_minpressure=0.5;						% Pa, Soglia di ampiezza delle esplosioni
 station.ex_index=[10,38];						% Pa, Soglia di ampiezza delle esplosioni
 station.ex_maxappvel=600;                   % m/s, Soglia di velocità apparente

@@ -36,7 +36,7 @@ station.id=[7955 7967 7951 7947 7959];
 station.sid=7963;
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	%%%%%%%%%%%%%%%%%% PROCESSING PARAMETERS & LOGFILES %%%%%%%%%%%%%%%%%%
-station.clockoffset=0;
+station.clockoffset=120;
 station.det2dB_flag=false;
 station.lag=10; % il 40-esimo secondo del minuto esatto
 station.last5min_det_file=[station.name,'_last5min_det.mat'];
@@ -49,7 +49,7 @@ station.mail_pub_logfile=[station.name,'_pub_mail.log'];
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	%%%%%%%%%%%%%%%%%% MCCA %%%%%%%%%%%%%%%%%%
 station.arrayfile='IDA-LVN-2018.mat';		%…coordinate
-station.sensors=[1 1 1 1 1];
+station.sensors=[1 1 1 1 0];
 %	——> EXPLOSIONS DETECTIONS <——
 station.ex_resampling=1;
 station.ex_minconsistency=0.07;
@@ -94,7 +94,7 @@ station.cav_minduration=1;                 % sec, durata minima di una valanga c
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	%%%%%%%%%%%%%%%%%% AVALANCHES EVENTS %%%%%%%%%%%%%%%%%%
 %>>>>>>>>>>>>>> TODO thresholds calibratio
-station.nav_minpressure=[0.1 0.1];     % Pa, pressione minima di un evento naturale
+station.nav_minpressure=[0.05 0.1];     % Pa, pressione minima di un evento naturale
 station.nav_mindur=[20 35];          % sec, durata minima di un evento naturale
 station.nav_maxvel=[600 600];         % m/s, velocità media massima di un evento naturale
 station.nav_meanvel=[390 390];         % m/s, velocità media di un evento naturale

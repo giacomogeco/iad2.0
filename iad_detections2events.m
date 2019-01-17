@@ -115,8 +115,8 @@ else
         Smax(i)=nanmax(ss);
         Smin(i)=nanmin(ss);
         
-        if D(i)>60
-            ixxx=find(twi<twi(1)+30/86400);
+        if D(i)>40
+            ixxx=find(twi<twi(1)+40/86400);
             [RR,ZZ]=corrcoef(twi(ixxx),ss(ixxx));%... inserito il 16 Gen 2017 - modificato a 60 sec 12 dec 2018
 
         else

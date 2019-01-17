@@ -878,7 +878,7 @@ while 1,
     
     if offline==1
         toc
-%         iad_plot_results_matfiles
+        iad_plot_results_matfiles
         break
     end
 %       pause(60)      

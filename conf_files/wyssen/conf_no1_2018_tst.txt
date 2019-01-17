@@ -60,7 +60,7 @@ station.ex_shift=.3;
 station.ex_taper=20;
 station.ex_frequencyband=[1 15];
 station.ex_min_dets_length=5;
-station.ex_min_dets_continuity=.31;
+station.ex_min_dets_continuity=0.31;
 station.ex_trplts='';                
 station.ex_maxlag=.6;  	%... seconds                
 station.ex_filterorder=3;                     
@@ -72,20 +72,20 @@ station.av_minconsistency=0.05;
 station.av_window=5;
 station.av_shift=0.5;
 station.av_taper=20;
-station.av_frequencyband=[1 5];
+station.av_frequencyband=[1 10];
 station.av_min_dets_length=10;
 station.av_min_dets_continuity=3.05;
 station.av_trplts='';                
 station.av_maxlag=.6;  	%... seconds                
 station.av_filterorder=3;
 station.av_filterripple=0.02; 
-station.av_azmaxstd=60;		%... degree, massima deviaszione standard tra i triangoli
+station.av_azmaxstd=120;		%... degree, massima deviaszione standard tra i triangoli
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	%%%%%%%%%%%%%%%%% EXPLOSIONS & CONTROLLED AVALANCHES EVENTS & Towers %%%%%%%%%%%%%%%%%%
 station.ExplYes=1;
 station.twr_baz=[240,280]; % °N respect to t
-station.twr_name={'Fonnbu'};	% nomi torri
-station.ex_minpressure=2;						% Pa, Soglia di ampiezza delle esplosioni
+station.twr_name={'Grasdal aust'};	% nomi torri
+station.ex_minpressure=.2;						% Pa, Soglia di ampiezza delle esplosioni
 station.ex_index=[10,38];						% Pa, Soglia di ampiezza delle esplosioni
 station.ex_maxappvel=600;                   % m/s, Soglia di velocità apparente
 station.cav_maxlag=2;                       % min,lag max tra un'esplosione ed una Controlled Avalanches 
@@ -96,7 +96,7 @@ station.cav_minduration=5;                 % sec, durata minima di una valanga c
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	%%%%%%%%%%%%%%%%%% AVALANCHES EVENTS %%%%%%%%%%%%%%%%%%
 station.nav_minpressure=[0.1 0.2];     % Pa, pressione minima di un evento naturale
-station.nav_mindur=[25 30];          % sec, durata minima di un evento naturale
+station.nav_mindur=[20 30];          % sec, durata minima di un evento naturale
 station.nav_maxvel=[600 600];         % m/s, velocità media massima di un evento naturale
 station.nav_meanvel=[380 380];         % m/s, velocità media di un evento naturale
 station.nav_minvel=[280 280];		% °, min velocity di un evento naturale

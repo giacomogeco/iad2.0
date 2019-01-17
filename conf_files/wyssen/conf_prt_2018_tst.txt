@@ -82,14 +82,14 @@ station.av_minconsistency=0.07;
 station.av_window=5;
 station.av_shift=0.5;
 station.av_taper=20;
-station.av_frequencyband=[1 5];
+station.av_frequencyband=[1 10];
 station.av_min_dets_length=10;
 station.av_min_dets_continuity=3.05;
 station.av_trplts='';                
 station.av_maxlag=0.6;  	%... seconds                
 station.av_filterorder=4;
 station.av_filterripple=0.02; 
-station.av_azmaxstd=20;		%... degree, massima deviaszione standard tra i triangoli
+station.av_azmaxstd=60;		%... degree, massima deviaszione standard tra i triangoli
 %station.shadowzones=[258 272;110 155];
 	% EXPLOSIONS & CONTROLLED AVALANCHES EVENTS
 	% Towers

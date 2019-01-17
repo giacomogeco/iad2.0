@@ -38,8 +38,8 @@ end
 
 key='zC8AqKrpAw-8tHawJGiDT-R80ab1PRic';
 limit='3000';
-struct='true';
-json='true';
+struct='false';
+json='false';
 server='https://control.wyssenavalanche.com/app/api/ida/raw.php?';
 
 disp(['Selected Data: ',datestr(t1(1),13),' - ',datestr(t2(end),13)])
@@ -71,26 +71,63 @@ for i=1:length(id)
         '&tmin=',tminv,...
         '&tmax=',tmaxv,...
         '&struct=',struct];
-%         disp(string)
+        disp(string)
 %         tic7
-        try
-            S = urlread(string,'Timeout',2);
-        catch
-            S=[];
+        ktry=0;
+        while 1      
+            try
+%                 tic
+                S = urlread(string,'Timeout',2);
+%                 
+                break
+            catch
+                disp('!!! Warning conection Timeout !!!')
+                ktry=ktry+1;
+                pause(5)
+            end
+            
+            if ktry==2
+                v=[];
+                t=[];
+                break
+            end
+        end
+        if isempty(S)
+            continue
         end
             
 %         et=toc;
 %         disp(['Wysse Server response time: ' , num2str(et),' s'])
-        
-        if ~isempty(S)
+        if strcmp(json,'true')
+%             disp('json dataset')
+            
+            a=jsondecode(S);
+            if isempty(a.values)
+                continue
+            end
+            a=a.values;
+            time=a(:,1);
+            time=datenum(1970,1,1)+time'/(86400*1000);
+            dato=a(:,2)';
+        else
             a=strsplit(S, {',',';'});
             a=a(1:end-1);
             time=str2num(cell2mat(a(1:2:end)));
             time=datenum(1970,1,1)+time'/86400;
             dato=str2num(cell2mat(a(2:2:end)));
-            t=cat(2,t,time);
-            v=cat(2,v,dato);
-        end       
+            dato=dato*5/2^16;
+        end
+        t=cat(2,t,time);
+        v=cat(2,v,dato);
+%         if ~isempty(S)
+%             a=strsplit(S, {',',';'});
+%             a=a(1:end-1);
+%             time=str2num(cell2mat(a(1:2:end)));
+%             time=datenum(1970,1,1)+time'/86400;
+%             dato=str2num(cell2mat(a(2:2:end)));
+%             t=cat(2,t,time);
+%             v=cat(2,v,dato);
+%         end       
     end
 	% fine cumulo
     
@@ -105,9 +142,9 @@ for i=1:length(id)
     d(i2)=v(i1);
 
     if flag_filt
-        out.(['m',num2str(i)])=filtrax_nan(d*5/2^16,f1(i),f2(i),50);
+        out.(['m',num2str(i)])=filtrax_nan(d,f1(i),f2(i),50);
     else
-        out.(['m',num2str(i)])=d*5/2^16;
+        out.(['m',num2str(i)])=d;
     end
     
 %     disp(['IDA-ID: ', char(id(i))])
@@ -121,7 +158,6 @@ end
 t=out.tt;
 out=rmfield(out,'tt');
 mtrx=cell2mat(struct2cell(out));
-size(mtrx)
 mtrx=mtrx(station.sensors>0,:);
 emptychk=sum(mtrx,1);
 if sum(isnan(emptychk))==size(emptychk,2)

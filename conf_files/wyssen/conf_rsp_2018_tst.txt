@@ -94,8 +94,8 @@ station.cav_azlag=360;                       % N°, differenza assoluta tra l'az
 station.cav_minduration=15;                 % sec, durata minima di una valanga controllata
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	%%%%%%%%%%%%%%%%%% AVALANCHES EVENTS %%%%%%%%%%%%%%%%%%
-station.nav_minpressure=[0.1 0.1];     % Pa, pressione minima di un evento naturale
-station.nav_mindur=[20 40];          % sec, durata minima di un evento naturale
+station.nav_minpressure=[0.05 0.1];     % Pa, pressione minima di un evento naturale
+station.nav_mindur=[30 40];          % sec, durata minima di un evento naturale
 station.nav_maxvel=[600 600];         % m/s, velocità media massima di un evento naturale
 station.nav_meanvel=[380 380];         % m/s, velocità media di un evento naturale
 station.nav_minvel=[280 280];		% °, min velocity di un evento naturale

@@ -64,14 +64,14 @@ station.ex_trplts='';
 station.ex_maxlag=.6;  	%... seconds                
 station.ex_filterorder=3;                     
 station.ex_filterripple=0.02; 
-station.ex_azmaxstd=30;		%... degree, massima deviazione standard tra i triangoli
+station.ex_azmaxstd=60;		%... degree, massima deviazione standard tra i triangoli
 %	——> AVALANCHES DETECTIONS <—-
 station.av_resampling=1;
 station.av_minconsistency=0.05;
 station.av_window=5;
 station.av_shift=.5;
 station.av_taper=20;
-station.av_frequencyband=[1 10];
+station.av_frequencyband=[1 5];
 station.av_min_dets_length=6;
 station.av_min_dets_continuity=2.51;
 station.av_trplts='';                
@@ -84,8 +84,8 @@ station.av_azmaxstd=30;		%... degree, massima deviaszione standard tra i triango
 station.ExplYes=1;
 station.twr_baz=[288,300;320,342]; % °N respect to t
 station.twr_name={'RitzAlpe','Louwene'};	% nomi torri
-station.ex_minpressure=0.5;						% Pa, Soglia di ampiezza delle esplosioni
-station.ex_index=[10,38];						% Pa, Soglia di ampiezza delle esplosioni
+station.ex_minpressure=0.3;						% Pa, Soglia di ampiezza delle esplosioni
+station.ex_index=[10,65];						% Pa, Soglia di ampiezza delle esplosioni
 station.ex_maxappvel=600;                   % m/s, Soglia di velocità apparente
 station.cav_maxlag=2;                       % min,lag max tra un'esplosione ed una Controlled Avalanches 
 station.cav_minlag=10;
@@ -94,7 +94,7 @@ station.cav_azlag=15;                       % N°, differenza assoluta tra l'azi
 station.cav_minduration=5;                 % sec, durata minima di una valanga controllata
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	%%%%%%%%%%%%%%%%%% AVALANCHES EVENTS %%%%%%%%%%%%%%%%%%
-station.nav_minpressure=[.15 .2];     % Pa, pressione minima di un evento naturale
+station.nav_minpressure=[.1 .1];     % Pa, pressione minima di un evento naturale
 station.nav_mindur=[20 40];          % sec, durata minima di un evento naturale
 station.nav_maxvel=[550 500];         % m/s, velocità media massima di un evento naturale
 station.nav_meanvel=[380 380];         % m/s, velocità media di un evento naturale
