@@ -71,14 +71,14 @@ station.av_minconsistency=0.05;
 station.av_window=5;
 station.av_shift=0.5;
 station.av_taper=20;
-station.av_frequencyband=[1 5];
+station.av_frequencyband=[1 10];
 station.av_min_dets_length=10;
 station.av_min_dets_continuity=3.05;
 station.av_trplts='';                
 station.av_maxlag=0.6;  	%... seconds                
 station.av_filterorder=3;
 station.av_filterripple=0.02; 
-station.av_azmaxstd=30;		%... degree, massima deviaszione standard tra i triangoli
+station.av_azmaxstd=120;		%... degree, massima deviaszione standard tra i triangoli
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	%%%%%%%%%%%%%%%%% EXPLOSIONS & CONTROLLED AVALANCHES EVENTS & Towers %%%%%%%%%%%%%%%%%%
 station.ExplYes=0;
@@ -94,14 +94,14 @@ station.cav_azlag=30;                       % N°, differenza assoluta tra l'azi
 station.cav_minduration=1;                 % sec, durata minima di una valanga controllata
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	%%%%%%%%%%%%%%%%%% AVALANCHES EVENTS %%%%%%%%%%%%%%%%%%
-station.nav_minpressure=[0.1 0.1];     % Pa, pressione minima di un evento naturale
-station.nav_mindur=[20 30];          % sec, durata minima di un evento naturale
+station.nav_minpressure=[0.04 0.1];     % Pa, pressione minima di un evento naturale
+station.nav_mindur=[10 30];          % sec, durata minima di un evento naturale
 station.nav_maxvel=[600 600];         % m/s, velocità media massima di un evento naturale
 station.nav_meanvel=[380 380];         % m/s, velocità media di un evento naturale
 station.nav_minvel=[250 250];		% °, min velocity di un evento naturale
-station.nav_maxbazstd=[120 100];		% °, std of backazimuths di un evento naturale
+station.nav_maxbazstd=[1200 1000];		% °, std of backazimuths di un evento naturale
 station.nav_maxveltrend=[0 -0.3];		% °, std of backazimuths di un evento naturale
-station.nav_shadowzones=[150,180;315,10];
+station.nav_shadowzones=[150,180;330,355];
 station.zonefilename='IDA_Indreesdalen_zones-2018.mat';
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	%%%%%%%%%%%%%%%%%% MYSQL PARAMETER %%%%%%%%%%%%%%%%%%
