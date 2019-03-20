@@ -94,7 +94,7 @@ station.cav_minduration=1;                 % sec, durata minima di una valanga c
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	%%%%%%%%%%%%%%%%%% AVALANCHES EVENTS %%%%%%%%%%%%%%%%%%
 %>>>>>>>>>>>>>> TODO thresholds calibratio
-station.nav_minpressure=[0.03 0.03];     % Pa, pressione minima di un evento naturale
+station.nav_minpressure=[0.02 0.03];     % Pa, pressione minima di un evento naturale
 station.nav_mindur=[25 40];          % sec, durata minima di un evento naturale
 station.nav_maxvel=[600 600];         % m/s, velocità media massima di un evento naturale
 station.nav_meanvel=[360 350];         % m/s, velocità media di un evento naturale

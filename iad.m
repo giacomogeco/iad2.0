@@ -60,20 +60,20 @@ sendTestRunning=false;
 
 global station
 %% LOOP DI PROCESSING
-while 1, 
+while 1
 
     %... Reading Station Parameters ...%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     station=iad_read_ascii2cell([working_dir,slh,'conf_files',slh,net,slh,ConfFileName]);
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-    if now-clock_offset/24<=tstart && offline==0, %... SOLO SE REALTIME
+    if now-clock_offset/24<=tstart && offline==0 %... SOLO SE REALTIME
         pause(2)
         disp(['... Waiting for start processing of ',upper(namestz),' infrasonic array'])
         continue
     end
     tstart=floor((now-clock_offset/24)*86400/60)/86400*60+1/1440+station.lag/86400;
 
-    if ~exist([working_dir,slh,'log',slh,station.logfile],'file'),
+    if ~exist([working_dir,slh,'log',slh,station.logfile],'file')
         disp('log file does not exist ...')
          last_processed_filetime=(now-clock_offset/24)-60/86400;
          
@@ -94,11 +94,11 @@ while 1,
         nowname=floor(((now-clock_offset/24)*86400/60))/86400*60-180/86400;
         nownames=nowlastname:1/1440:nowname;
 
-        if isempty(nownames),
+        if isempty(nownames)
             nownames=nowname;
         end
 
-        if knodata>15, % ????????????????????
+        if knodata>15 % ????????????????????
             disp('non arriva dato per troppo tempo....resetto il contatore')
             knodata=0;
             nownames=nowname;
@@ -117,16 +117,14 @@ while 1,
     end
    
 
-
-
-    for i15=1:length(nownames),
+    for i15=1:length(nownames)
 
         to=nownames(i15);
         tend=to+60/86400;%-1/100/86400;      
         disp(['Processing...',datestr(to),'_Lastminute'])
 
         ktry=0;
-        while 1,
+        while 1
             ktry=ktry+1;
             
             disp(['Loading ',upper(namestz),' data From:',datestr(to,0),' To: ',datestr(tend,0)])
@@ -180,7 +178,7 @@ while 1,
 
 
 
-        if isempty(tv),
+        if isempty(tv)
             knodata=knodata+1;
             string=textread([working_dir,slh,'log',slh,station.logfile],'%s');
             fid=fopen([working_dir,slh,'log',slh,station.logfile],'w');
@@ -532,7 +530,7 @@ while 1,
             end
         end
 
-       
+       Ev_Nav.data
         % Selezione valanghe naturali in base ad Ampiezza, Durata, App. Vel.,... 
         if size(Ev_Nav.data,1)>0
             
@@ -542,13 +540,17 @@ while 1,
                 Ev_Nav.data(:,19) < station.nav_maxveltrend(1) & ...                                        %... App. Vel. "trend"
                 Ev_Nav.data(:,10) < station.nav_meanvel(1) & ...                  %... App. Vel.
                 Ev_Nav.data(:,10) > station.nav_minvel(1) & ...
-		abs(Ev_Nav.data(:,21)-Ev_Nav.data(:,20)) < station.nav_maxbazstd(1));                       %... App. Vel.         
+		abs(Ev_Nav.data(:,21)-Ev_Nav.data(:,20)) < station.nav_maxbazstd(1))                       %... App. Vel.         
             
             if ~isempty(iprobabilistic),
                 %... Associao probabilit 50% (low probability) a tutti gli eventi
                 Ev_Nav.data=Ev_Nav.data(iprobabilistic,:);
                 Ev_Nav.data(:,17)=.5*ones(1,length(iprobabilistic));
 				
+                abs(Ev_Nav.data(:,21)-Ev_Nav.data(:,20))
+                station.nav_maxbazstd(2)
+                
+                
 		ideterministic=find(Ev_Nav.data(:,3)>station.nav_mindur(2) & ...    %... Duration
                     Ev_Nav.data(:,6)>station.nav_minpressure(2) & ...               %... Amplitude
                     Ev_Nav.data(:,11)<station.nav_maxvel(2) & ...                   %... App. Vel.
@@ -556,19 +558,19 @@ while 1,
                     Ev_Nav.data(:,10)<station.nav_meanvel(2) & ...                  %... App. Vel.
                     Ev_Nav.data(:,10)>station.nav_minvel(2) & ...
 		    abs(Ev_Nav.data(:,21)-Ev_Nav.data(:,20)) < station.nav_maxbazstd(2) | ... %... App. Vel.
-                   (Ev_Nav.data(:,3)>100 & Ev_Nav.data(:,6)>.8));  % se dura pi?? di 100s e la pressione supera 0.2                     
+                   (Ev_Nav.data(:,3)>100 & Ev_Nav.data(:,6)>.8))  % se dura pi?? di 100s e la pressione supera 0.2                     
 				
                 if ~isempty(ideterministic)
                     %... Associao probabili 100% (high probability) a gli eventi sopra la seconda soglia
                     Ev_Nav.data(ideterministic,17)=ones(1,length(ideterministic));
                 end
-           else
+            else
                 Ev_Nav.data=[];
             end
         else
             Ev_Nav.data=[];
         end
-
+        
         % Merge eventi vecchi
         try
             old_ev=load([working_dir,slh,'tmp',slh,station.eventfile]);
@@ -586,6 +588,7 @@ while 1,
             old_ev.Ev_Nav.data=[];
             old_ev.Ev_Cav.data=[];
         end
+        
 
         if ~isempty(old_ev.Ev_Ex.data),
             ii=1:size(old_ev.Ev_Ex.data,1);

@@ -72,7 +72,7 @@ station.av_shift=0.5;
 station.av_taper=20;
 station.av_frequencyband=[1 5];
 station.av_min_dets_length=10;
-station.av_min_dets_continuity=1.05;	% tuned on dec 21 2018
+station.av_min_dets_continuity=2.55;	% tuned on dec 21 2018
 station.av_trplts='';                
 station.av_maxlag=0.6;  	%... seconds                
 station.av_filterorder=3;
@@ -83,26 +83,26 @@ station.av_azmaxstd=600;		%... degree, massima deviaszione standard tra i triang
 %TODO gun position
 station.ExplYes=1;
 %station.twr_baz=[68,83]; % 1
-station.twr_baz=[80,95]; % tuned 2018-12-19
-station.twr_name={'GP4-GP3-GP2'};	% nomi torri
+station.twr_baz=[80,108;235,250]; % tuned 2018-12-19
+station.twr_name={'GP4-GP3-GP2';'GP5'};	% nomi torri
 station.ex_minpressure=0.02;						% Pa, Soglia di ampiezza delle esplosioni
 station.ex_index=[10,25];						% Pa, Soglia di ampiezza delle esplosioni
 station.ex_maxappvel=340;                   % m/s, Soglia di velocità apparente
 station.cav_maxlag=2;                       % min,lag max tra un'esplosione ed una Controlled Avalanches 
 station.cav_minlag=8;
-station.cav_minpressure=0.01;
+station.cav_minpressure=0.002;
 station.cav_azlag=360;                       % N°, differenza assoluta tra l'azimuth medio dell'esplosione e l'azimuth della potenziale valanga
 station.cav_minduration=10;                 % sec, durata minima di una valanga controllata
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	%%%%%%%%%%%%%%%%%% AVALANCHES EVENTS %%%%%%%%%%%%%%%%%%
-station.nav_minpressure=[0.04 0.1];     % Pa, pressione minima di un evento naturale
-station.nav_mindur=[20 40];          % sec, durata minima di un evento naturale
+station.nav_minpressure=[0 0.05];     % Pa, pressione minima di un evento naturale
+station.nav_mindur=[30 40];          % sec, durata minima di un evento naturale
 station.nav_maxvel=[600 600];         % m/s, velocità media massima di un evento naturale
 station.nav_meanvel=[420 420];         % m/s, velocità media di un evento naturale
 station.nav_minvel=[250 250];		% °, min velocity di un evento naturale
-station.nav_maxbazstd=[100 100];		% °, std of backazimuths di un evento naturale
-station.nav_maxveltrend=[0 -0.3];		% °, std of backazimuths di un evento naturale
-station.nav_shadowzones=[65 75];
+station.nav_maxbazstd=[1000 1000];		% °, std of backazimuths di un evento naturale
+station.nav_maxveltrend=[-0.3 -0.5];		% °, std of backazimuths di un evento naturale
+station.nav_shadowzones=[65 70];
 station.zonefilename='';
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	%%%%%%%%%%%%%%%%%% MYSQL PARAMETER %%%%%%%%%%%%%%%%%%

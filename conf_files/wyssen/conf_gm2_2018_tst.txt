@@ -71,14 +71,14 @@ station.av_minconsistency=0.05;
 station.av_window=5;
 station.av_shift=.5;
 station.av_taper=20;
-station.av_frequencyband=[1 5];
+station.av_frequencyband=[1 10];
 station.av_min_dets_length=6;
-station.av_min_dets_continuity=2d.51;
+station.av_min_dets_continuity=2.51;
 station.av_trplts='';                
 station.av_maxlag=.6;  	%... seconds                
 station.av_filterorder=3;
 station.av_filterripple=0.02; 
-station.av_azmaxstd=30;		%... degree, massima deviaszione standard tra i triangoli
+station.av_azmaxstd=120;		%... degree, massima deviaszione standard tra i triangoli
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	%%%%%%%%%%%%%%%%% EXPLOSIONS & CONTROLLED AVALANCHES EVENTS & Towers %%%%%%%%%%%%%%%%%%
 station.ExplYes=1;
@@ -94,7 +94,7 @@ station.cav_azlag=15;                       % N°, differenza assoluta tra l'azi
 station.cav_minduration=5;                 % sec, durata minima di una valanga controllata
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	%%%%%%%%%%%%%%%%%% AVALANCHES EVENTS %%%%%%%%%%%%%%%%%%
-station.nav_minpressure=[.1 .1];     % Pa, pressione minima di un evento naturale
+station.nav_minpressure=[.02 .05];     % Pa, pressione minima di un evento naturale
 station.nav_mindur=[20 40];          % sec, durata minima di un evento naturale
 station.nav_maxvel=[550 500];         % m/s, velocità media massima di un evento naturale
 station.nav_meanvel=[380 380];         % m/s, velocità media di un evento naturale

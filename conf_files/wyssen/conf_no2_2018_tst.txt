@@ -66,12 +66,12 @@ station.ex_filterorder=3;
 station.ex_filterripple=0.02; 
 station.ex_azmaxstd=30;		%... degree, massima deviazione standard tra i triangoli
 %	——> AVALANCHES DETECTIONS <—-
-station.av_resampling=1;
+station.av_resampling=2;
 station.av_minconsistency=0.05;
 station.av_window=5;
 station.av_shift=0.5;
 station.av_taper=20;
-station.av_frequencyband=[1 10];
+station.av_frequencyband=[2 10];
 station.av_min_dets_length=10;
 station.av_min_dets_continuity=3.05;
 station.av_trplts='';                
@@ -95,7 +95,7 @@ station.cav_minduration=1;                 % sec, durata minima di una valanga c
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	%%%%%%%%%%%%%%%%%% AVALANCHES EVENTS %%%%%%%%%%%%%%%%%%
 station.nav_minpressure=[0.04 0.1];     % Pa, pressione minima di un evento naturale
-station.nav_mindur=[10 30];          % sec, durata minima di un evento naturale
+station.nav_mindur=[20 30];          % sec, durata minima di un evento naturale
 station.nav_maxvel=[600 600];         % m/s, velocità media massima di un evento naturale
 station.nav_meanvel=[380 380];         % m/s, velocità media di un evento naturale
 station.nav_minvel=[250 250];		% °, min velocity di un evento naturale

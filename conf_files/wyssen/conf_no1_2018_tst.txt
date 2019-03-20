@@ -15,7 +15,7 @@ station.network='WYSSEN IDA Network';
 station.legend={'Pa','Pa','Pa','Pa','Pa'};
 station.legendvalue={'0.5','0.5','0.5','0.5','0.5'};
 station.amplification=[1 1 1 1 1];
-station.spikeremove=[0 50];
+station.spikeremove=[1 50];
 station.noisezones=[];
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	%%%%%%%%%%%%%%%%%% WINSTON PARAMETERS %%%%%%%%%%%%%%%%%%

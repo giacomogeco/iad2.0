@@ -5,7 +5,7 @@ station.smp=[100 100 100 100];
 station.chname={'m1','m2','m3','m4',};
 station.advoltage=54;   %... Volt
 station.adbit=24;       %... bit
-station.gain=[.4 .4 .4 .4];
+station.gain=[0.4 0.4 -0.4 0.4];
 station.filter=[.8 15;.8 15;.8 15;.8 15];
 station.drumshift=[.5 .5 .5 .5];    %... UM
 station.resampling=[1 1 1 1];
@@ -48,7 +48,7 @@ station.mail_av_logfile=[station.name,'_av_mail.log'];
 station.mail_pub_logfile=[station.name,'_pub_mail.log'];
 station.mail_cav_logfile=[station.name,'_cav_mail.log'];
 %% MCCA
-station.arrayfile='array-PRT-2014.mat';		%…coordinate
+station.arrayfile='array-PRT-2014.mat';		%â¦coordinate
 station.sensors=[1 1 1 1];
 station.noisezones=[240,290];
 	% EXPLOSIONS DETECTIONS
@@ -68,28 +68,28 @@ station.ex_azmaxstd=30;		%... degree, massima deviaszione standard tra i triango
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	%%%%%%%%%%%%%%%%% EXPLOSIONS & CONTROLLED AVALANCHES EVENTS & Towers %%%%%%%%%%%%%%%%%%
 station.ExplYes=1;
-station.twr_baz=[190,210];			% °N respect to the array central element position
+station.twr_baz=[190,210];			% Â°N respect to the array central element position
 station.twr_name={'Ticino'};	% nomi torri
 station.ex_minpressure=1;	% 6 Dec 2018 diviso x 2 perche sconv=0.4 anziche 0.2 - % Pa, Soglia di ampiezza delle esplosioni
 station.ex_index=[10,38];
-station.ex_maxappvel=400;                   % m/s, Soglia di velocità apparente
+station.ex_maxappvel=400;                   % m/s, Soglia di velocitÃ  apparente
 station.cav_maxlag=2;                       % min,lag max tra un'esplosione ed una Controlled Avalanches 
 station.cav_minpressure=0;
-station.cav_azlag=30;                       % N°, differenza assoluta tra l'azimuth medio dell'esplosione e l'azimuth della potenziale valanga
+station.cav_azlag=30;                       % NÂ°, differenza assoluta tra l'azimuth medio dell'esplosione e l'azimuth della potenziale valanga
 	% AVALANCHES DETECTIONS
 station.av_resampling=1;
 station.av_minconsistency=0.07;
 station.av_window=5;
 station.av_shift=0.5;
 station.av_taper=20;
-station.av_frequencyband=[1 10];
+station.av_frequencyband=[2 10];
 station.av_min_dets_length=10;
 station.av_min_dets_continuity=3.05;
 station.av_trplts='';                
 station.av_maxlag=0.6;  	%... seconds                
 station.av_filterorder=4;
 station.av_filterripple=0.02; 
-station.av_azmaxstd=60;		%... degree, massima deviaszione standard tra i triangoli
+station.av_azmaxstd=40;		%... degree, massima deviaszione standard tra i triangoli
 %station.shadowzones=[258 272;110 155];
 	% EXPLOSIONS & CONTROLLED AVALANCHES EVENTS
 	% Towers
@@ -98,16 +98,16 @@ station.av_azmaxstd=60;		%... degree, massima deviaszione standard tra i triango
 %station.cav_minlag=10;
 station.cav_maxlag=2;                       % min,lag max tra un'esplosione ed una Controlled Avalanches 
 station.cav_minlag=10;
-station.cav_azlag=15;                       % N°, differenza assoluta tra l'azimuth medio dell'esplosione e l'azimuth della potenziale valanga
+station.cav_azlag=15;                       % NÂ°, differenza assoluta tra l'azimuth medio dell'esplosione e l'azimuth della potenziale valanga
 station.cav_minduration=5; 
 % AVALANCHES EVENTS 
-station.nav_minpressure=[0.1 0.1];     % Pa, pressione minima di un evento naturale
+station.nav_minpressure=[0.04 0.1];     % Pa, pressione minima di un evento naturale
 station.nav_mindur=[25 40];          % sec, durata minima di un evento naturale
-station.nav_maxvel=[580 580];         % m/s, velocità media massima di un evento naturale
-station.nav_meanvel=[380 380];         % m/s, velocità media di un evento naturale
-station.nav_maxbazstd=[100 100];		% °, migration of backazimuths di un evento naturale
-station.nav_maxveltrend=[0 -0.3];		% °, std of backazimuths di un evento naturale
-station.nav_minvel=[300 300];		% °, min velocity di un evento naturale
+station.nav_maxvel=[580 580];         % m/s, velocitÃ  media massima di un evento naturale
+station.nav_meanvel=[380 380];         % m/s, velocitÃ  media di un evento naturale
+station.nav_maxbazstd=[100 100];		% Â°, migration of backazimuths di un evento naturale
+station.nav_maxveltrend=[0 -0.3];		% Â°, std of backazimuths di un evento naturale
+station.nav_minvel=[300 300];		% Â°, min velocity di un evento naturale
 station.nav_shadowzones=[250,320;90,175];
 station.zonefilename='';
 %% MYSQL PARAMETER
@@ -141,5 +141,4 @@ station.mailthreshold_minpressure=station.nav_minpressure(2);
 station.mailthreshold_minduration=station.nav_mindur(2);                           %... seconds
 station.mailstring={''};
 station.bazmail=[0,0.0001];
-
 

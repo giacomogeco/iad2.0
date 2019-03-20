@@ -39,10 +39,10 @@ if RR<=minR*cps,
             if ii==1,
                 index=[lindex(1) lindex(2) lindex(3)];
             end
-            if ii==2,
+            if ii==2
                 index=[lindex(2) lindex(3) lindex(1)];
             end
-            if ii==3,
+            if ii==3
                 index=[lindex(3) lindex(1) lindex(2)];
             end
 
@@ -57,7 +57,7 @@ if RR<=minR*cps,
             C(ii)=norm(cross(AA,BB)/(norm(AA)*norm(BB)));
             
             [an,r]=cart2pol(yy-yy(1),xx-xx(1));
-            an(an<0)=2*pi+an(an<0); %... tra 0 e 360�
+            an(an<0)=2*pi+an(an<0); %... tra 0 e 360???
 
             dt1=tfly(index(2))-tfly(index(1));
             dt2=tfly(index(3))-tfly(index(1));
@@ -66,7 +66,7 @@ if RR<=minR*cps,
             X(ii)=dt1*r(3)*cos(an(3))-dt2*r(2)*cos(an(2));
             Y(ii)=dt2*r(2)*sin(an(2))-dt1*r(3)*sin(an(3));
 
-            if ispolycw({xx},{yy}),
+            if ispolycw({xx},{yy})
             else
                 X(ii)=-X(ii);Y(ii)=-Y(ii);
             end
@@ -81,10 +81,10 @@ if RR<=minR*cps,
     az1(az1<0)=2*pi+az1(az1<0);
 
     if strcmp(station.name,'lpb')
-	disp('.... Giacomo modification 2018-12-24 !!!!!!!')
-	az=az1(4);
+        disp('.... Giacomo modification 2018-12-24 !!!!!!!')
+        az=az1(4);
     else
-	az=circ_median(az1,2);
+        az=circ_median(az1,2);
     end
 
     

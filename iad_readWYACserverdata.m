@@ -39,7 +39,7 @@ end
 key='zC8AqKrpAw-8tHawJGiDT-R80ab1PRic';
 limit='3000';
 struct='false';
-json='true';
+json='false';
 server='https://control.wyssenavalanche.com/app/api/ida/raw.php?';
 
 disp(['Selected Data: ',datestr(t1(1),13),' - ',datestr(t2(end),13)])
