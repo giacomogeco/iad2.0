@@ -67,7 +67,7 @@ end
 
 %% DATA SORTING
 field=fieldnames(data);
-for n=1:length(field);
+for n=1:length(field)
     cfield=char(field(n));
     ist=getfield(Ist,cfield);
     if issorted(ist)==0
@@ -86,10 +86,10 @@ for n=1:length(field);
 end
 
 %% INTEGRITY and CONTINUITY CHECK
-% Integrit�: continuit� del passo di campionamento
-% Continuit�: continuit� del tempo di inizio
+% Integrit???: continuit??? del passo di campionamento
+% Continuit???: continuit??? del tempo di inizio
 field=fieldnames(data);
-for n=1:length(field);
+for n=1:length(field)
     cfield=char(field(n));
     ist=getfield(Ist,cfield);
     sps=getfield(Sps,cfield);
@@ -177,52 +177,53 @@ end
 
 j=findstr(file,'_');
 stz=char(file(1:j(1)-1));
-% disp(strcat('Loading station parameters:...',stz));
-% stz
-% file_stz=strcat(lower(stz),'.mat');
-% a=exist(file_stz,'file');
-% if a==2
-%     load(file_stz)
-% %     disp('ALERT!!!!!!!!!!!')
-% %     load gry_2009
-%     ch=(station.channel);
-% %     ch=ch(5:8)
-%     chname=station.chname;
-%     gain=station.gain;
-%     nch=length(ch);
-%     field=(fieldnames(data));
-%    
-%     for n=1:nch
-%         cch=char(ch(n));
-%         chi=strmatch(cch,field);
-%         if ~isempty(chi)
-%             data=setfield(data,char(chname(n)),getfield(data,char(field(chi)))./gain(n));
-%             data=rmfield(data,char(field(chi)));
-%             Sps=setfield(Sps,char(chname(n)),getfield(Sps,char(field(chi))));
-%             Sps=rmfield(Sps,char(field(chi)));
-%             Ist=setfield(Ist,char(chname(n)),getfield(Ist,char(field(chi))));
-%             Ist=rmfield(Ist,char(field(chi)));
-%         else
-%             disp(strcat('MISSING CHANNEL:...',ch(n)));
-%         end
-%     end
-%     station.file=file_stz;
-% else
-%     disp('!!! STATION PARAMETERS NOT AVAILABLES !!!')
-%     station.file='File Not Available';
-% end
+disp(strcat('Loading station parameters:...',stz));
+stz
+file_stz=strcat(lower(stz),'.mat');
+a=exist(file_stz,'file');
+if a==2
+    load(file_stz)
+    disp('station parameter loaded ')
+%     load gry_2009
+    ch=(station.channel);
+%     ch=ch(5:8)
+    chname=station.chname;
+    gain=station.gain;
+    nch=length(ch);
+    field=(fieldnames(data));
+   
+    for n=1:nch
+        cch=char(ch(n));
+        chi=strmatch(cch,field);
+        if ~isempty(chi)
+            gain(n)
+            data=setfield(data,char(chname(n)),getfield(data,char(field(chi)))./gain(n));
+            data=rmfield(data,char(field(chi)));
+            Sps=setfield(Sps,char(chname(n)),getfield(Sps,char(field(chi))));
+            Sps=rmfield(Sps,char(field(chi)));
+            Ist=setfield(Ist,char(chname(n)),getfield(Ist,char(field(chi))));
+            Ist=rmfield(Ist,char(field(chi)));
+        else
+            disp(strcat('MISSING CHANNEL:...',ch(n)));
+        end
+    end
+    station.file=file_stz;
+else
+    disp('!!! STATION PARAMETERS NOT AVAILABLES !!!')
+    station.file='File Not Available';
+end
 
 %% Riepilogo Informazioni
 % Creazione struttura info
-% info=struct();
-% info.stz=stz;
-% info.file=filename;
-% info.path=pathname;
-% info.channel=fieldnames(data);
-% info.sps=Sps;
-% info.t=Ist;
-% info.station=station;
-% data.info=info;
+info=struct();
+info.stz=stz;
+info.file=filename;
+info.path=pathname;
+info.channel=fieldnames(data);
+info.sps=Sps;
+info.t=Ist;
+info.station=station;
+data.info=info;
 
 %% Comando creazione variabili
 % stringa di comando per creazione variabili

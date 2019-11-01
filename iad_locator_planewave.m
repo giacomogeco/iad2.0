@@ -1,4 +1,4 @@
-function [pmx,cmax,az,azsd,va,vasd,RR,sts,ffp,iex,cex]=iad_locator_planewave(pp,maxl,iclose,fi,...
+function [pmx, pdx, cmax,az,azsd,va,vasd,RR,sts,ffp,iex,cex]=iad_locator_planewave(pp,maxl,iclose,fi,...
     xstz,ystz,minR,cps,bkzmaxstd,station,type)
 
 nstzc=length(xstz);
@@ -6,7 +6,7 @@ sensors=ones(1,nstzc);
 
 if isempty(fi),fi=1;end
 
-az=NaN;va=NaN;pmx=NaN;vasd=NaN;azsd=NaN;sts=NaN;ffp=NaN;iex=NaN;cex=NaN;
+az=NaN;va=NaN;pmx=NaN;vasd=NaN;azsd=NaN;sts=NaN;ffp=NaN;iex=NaN;cex=NaN;pdx=NaN;
 %... consistency
 [c,l]=xcorr(pp',maxl,'coeff');
 
@@ -21,22 +21,22 @@ RR=sqrt(sum(RR.^2)/size(RR,1));
 
 mx=max(lagg');
 tfly=zeros(size(lagg));
-for i=1:nstzc,
+for i=1:nstzc
     tfly(i,:)=lagg(i,:)-mx(i);
 end
 tfly=mean(-tfly);
 
 % RR=0;
-if RR<=minR*cps,
+if RR<=minR*cps
 
     cmb3=iad_combntns(find(sensors==1),3);    %... triplet's combination
 %     Y=zeros(1,3);X=Y;
     az1=zeros(1,size(cmb3,1));
-    for i=1:size(cmb3,1),
+    for i=1:size(cmb3,1)
         lindex=cmb3(i,:);   %... i-tripletta
-        for ii=1:3, %... per ogni ii-centro della i-esima tripletta (2008, Ludwik Liszka - IRF Sweden)
+        for ii=1:3 %... per ogni ii-centro della i-esima tripletta (2008, Ludwik Liszka - IRF Sweden)
 
-            if ii==1,
+            if ii==1
                 index=[lindex(1) lindex(2) lindex(3)];
             end
             if ii==2
@@ -80,7 +80,7 @@ if RR<=minR*cps,
 
     az1(az1<0)=2*pi+az1(az1<0);
 
-    if strcmp(station.name,'lpb')
+    if strcmp(station.name,'lpbxxxxx')
         disp('.... Giacomo modification 2018-12-24 !!!!!!!')
         az=az1(4);
     else
@@ -113,7 +113,7 @@ if RR<=minR*cps,
         [ag,dc]=cart2pol(yc(ix,:)-yc(ix,1),xc(ix,:)-xc(ix,1));
         dcR(ix)=abs(dc(2).*cos(az-ag(2)));
         llgg(ix)=abs(diff(tfly(cmb2(ix,:))));
-        if llgg(ix)>2,
+        if llgg(ix)>2
             igo=igo+1;
             va(igo)=dcR(ix)./(llgg(ix)/(cps(fi)));
         end
@@ -144,7 +144,10 @@ if RR<=minR*cps,
     %... ampiezza massima tracciato steccato. contempla valori massimi
     %... negativi e positivi
     [st,sts]=iad_stack_traces(pp,tfly);
-    [pmx,~]=max(abs(sts));    %... Pa
+        %... Pa
+    [pmx,imx]=max(abs(sts));    %... Pa
+%     size(st)
+%     [pdx,~]=max(abs(st(:,imx-cps:imx+cps-1)));
     
     if station.ExplYes && strcmp(type,'explosions')
         if pmx>station.ex_minpressure

@@ -2,8 +2,8 @@ clear all,close all
 
 global E FROM
 
-wpath='http://85.10.199.200/DETECTIONS/';
-% wpath='http://148.251.122.130/DETECTIONS/';
+% wpath='http://85.10.199.200/DETECTIONS/';
+wpath='http://148.251.122.130/DETECTIONS/';
 
 FROM=input('FROM (yyyy-mm-dd_HH)','s');
 TO=input('TO (yyyy-mm-dd_HH)','s');
@@ -11,7 +11,7 @@ FROM=datenum(FROM,'yyyy-mm-dd_HH');
 T0=datenum(TO,'yyyy-mm-dd_HH');
 nownames=FROM:1/24:T0;
 nfile=length(nownames);
-stz='prt';
+stz='hrm';
 
 prs=[];bkz=[];bkzsd=[];vel=[];velsd=[];smb=[];
 fpk=[];cns=[];time=[];
@@ -54,13 +54,13 @@ end
 % j=bkz>89 & bkz<150 & vel<450;
 % bkz=bkz(j);prs=prs(j);time=time(j);vel=vel(j);smb=smb(j);cns=cns(j);fpk=fpk(j);bkzsd=bkzsd(j);
 % 
-j=bkzsd>0.53;
-bkz(j)='';prs(j)='';time(j)='';vel(j)='';smb(j)='';cns(j)='';fpk(j)='';bkzsd(j)='';
+% j=bkzsd>0.53;
+% bkz(j)='';prs(j)='';time(j)='';vel(j)='';smb(j)='';cns(j)='';fpk(j)='';bkzsd(j)='';
 % save ida_natural time prs bkz vel smb vel cns velsd bkzsd fpk Ev_Nav
-return
+
 %%
 
-station=iad_read_ascii2cell(['/Users/giacomo/Documents/item/matlab/iad_av_detector/conf_files/wyssen/conf_','prt','_2016_priv.txt']);
+station=iad_read_ascii2cell(['/Users/giacomo/softwarecode/iad2.0/conf_files/wyssen/conf_','hrm','_2018_tst.txt']);
 % station=iad_read_ascii2cell(['/Users/giacomo/Documents/item/matlab/iad_av_detector/conf_files/wyssen/conf_','gms2','_2016_priv.txt']);
 % station=iad_read_ascii2cell(['/Users/giacomo/Documents/item/matlab/iad_av_detector/conf_files/lgs/conf_','gry','_2017_priv.txt']);
 % station=iad_read_ascii2cell(['/Users/giacomo/Documents/item/matlab/iad_av_detector/conf_files/wyssen/conf_','no1','_2017_priv.txt']);

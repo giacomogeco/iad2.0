@@ -140,6 +140,7 @@ while 1
             if isempty(data)
                 eff=0;
             else
+                
                 data = structfun(@(x) ( x' ), data, 'UniformOutput', false);
 %               data=iad_rmseed(tfiles,station);
                 icut=data.tt>=to & data.tt<tend;
@@ -205,7 +206,7 @@ while 1
 
         tstart=floor((now-clock_offset/24)*86400/60)/86400*60+1/1440+station.lag/86400;
 
-        if on_start==1,
+        if on_start==1
             
             for ich=1:length(station.wschannels)
                 M(ich,:)=eval(['m',num2str(ich)])';
@@ -225,7 +226,7 @@ while 1
             on_start=0;
         else
              ii=find(tt<tv(1)-60/86400);  
-             if ~isempty(ii),
+             if ~isempty(ii)
                 M(:,ii)='';
                 tt(ii)='';
              end
@@ -256,7 +257,6 @@ while 1
             disp('EXPLOSION')
             knodata=0;
             % Processo Detection per ESPLOSIONI
-
             Det_Ex=iad_mcc_analysis(tt,M,station,slh,working_dir,'explosions');
             
         else
@@ -264,7 +264,7 @@ while 1
         end
 
 		
-        if ~isempty(Det_Ex.data),
+        if ~isempty(Det_Ex.data)
 %             iv=Det_Ex.data(:,5)>250;
 %             Det_Ex.data=Det_Ex.data(iv,:);
         end
@@ -274,13 +274,13 @@ while 1
 	        % Processo Detection per VALANGHE naturali e controlled     
         Det_Av=iad_mcc_analysis(tt,M,station,slh,working_dir,'avalanches');
 		
-		if ~isempty(Det_Av.data),
+		if ~isempty(Det_Av.data)
 % 			iv=Det_Av.data(:,5)>250;
 % 			Det_Av.data=Det_Av.data(iv,:);
         end
         
         %... remove detections from stationary noise zones
-	if ~isempty(station.noisezones),
+	if ~isempty(station.noisezones)
 		for inzs=1:size(station.noisezones,1)
 			inoi=Det_Av.data(:,3)>station.noisezones(inzs,1) & Det_Av.data(:,3)<station.noisezones(inzs,2);
 			Det_Av.data(inoi,:)=[];
@@ -289,7 +289,7 @@ while 1
 	end
 		
 
-        if isempty(Det_Av.data) && isempty(Det_Ex.data),
+        if isempty(Det_Av.data) && isempty(Det_Ex.data)
             fid=fopen([working_dir,slh,'log',slh,station.logfile],'w');
             fwrite(fid,datestr(tend,'yyyymmdd_HHMMSS'));
 %             datestr(tt(end),'yyyymmdd_HHMMSS')
@@ -540,9 +540,10 @@ while 1
                 Ev_Nav.data(:,19) < station.nav_maxveltrend(1) & ...                                        %... App. Vel. "trend"
                 Ev_Nav.data(:,10) < station.nav_meanvel(1) & ...                  %... App. Vel.
                 Ev_Nav.data(:,10) > station.nav_minvel(1) & ...
-		abs(Ev_Nav.data(:,21)-Ev_Nav.data(:,20)) < station.nav_maxbazstd(1))                       %... App. Vel.         
+		abs(Ev_Nav.data(:,21)-Ev_Nav.data(:,20)) < station.nav_maxbazstd(1));                       %... App. Vel.         
             
-            if ~isempty(iprobabilistic),
+    
+            if ~isempty(iprobabilistic)
                 %... Associao probabilit 50% (low probability) a tutti gli eventi
                 Ev_Nav.data=Ev_Nav.data(iprobabilistic,:);
                 Ev_Nav.data(:,17)=.5*ones(1,length(iprobabilistic));
@@ -558,7 +559,7 @@ while 1
                     Ev_Nav.data(:,10)<station.nav_meanvel(2) & ...                  %... App. Vel.
                     Ev_Nav.data(:,10)>station.nav_minvel(2) & ...
 		    abs(Ev_Nav.data(:,21)-Ev_Nav.data(:,20)) < station.nav_maxbazstd(2) | ... %... App. Vel.
-                   (Ev_Nav.data(:,3)>100 & Ev_Nav.data(:,6)>.8))  % se dura pi?? di 100s e la pressione supera 0.2                     
+                   (Ev_Nav.data(:,3)>100 & Ev_Nav.data(:,6)>.8));  % se dura pi?? di 100s e la pressione supera 0.2                     
 				
                 if ~isempty(ideterministic)
                     %... Associao probabili 100% (high probability) a gli eventi sopra la seconda soglia
@@ -590,31 +591,31 @@ while 1
         end
         
 
-        if ~isempty(old_ev.Ev_Ex.data),
+        if ~isempty(old_ev.Ev_Ex.data)
             ii=1:size(old_ev.Ev_Ex.data,1);
             Ev_Ex.data=[old_ev.Ev_Ex.data(ii,:);Ev_Ex.data]; %problema dei doppi
             Ev_Ex.torretta=[old_ev.Ev_Ex.torretta(ii),Ev_Ex.torretta];
        end
 
-        if ~isempty(old_ev.Ev_Nav.data),
+        if ~isempty(old_ev.Ev_Nav.data)
             ii=1:size(old_ev.Ev_Nav.data,1);
             Ev_Nav.data=[old_ev.Ev_Nav.data(ii,:);Ev_Nav.data];
         end
 
-        if ~isempty(old_ev.Ev_Cav.data),
+        if ~isempty(old_ev.Ev_Cav.data)
             ii=1:size(old_ev.Ev_Cav.data,1);
             Ev_Cav.data=[old_ev.Ev_Cav.data(ii,:);Ev_Cav.data];
         end
 
 
         % Ripulisti delle sovrapposizioni degli eventi
-        if size(Ev_Cav.data,1)>0,
-           if ~isempty(Ev_Ex.data), %se ha trovato esplosioni...
-                for iexp=1:size(Ev_Ex.data,1), %per tutte le esplosioni
+        if size(Ev_Cav.data,1)>0
+           if ~isempty(Ev_Ex.data) %se ha trovato esplosioni...
+                for iexp=1:size(Ev_Ex.data,1) %per tutte le esplosioni
                     ii=find(Ev_Cav.data(:,1)>=Ev_Ex.data(iexp,1)-5/86400 & Ev_Cav.data(:,1)<=Ev_Ex.data(iexp,2)+5/86400);
-                    if ~isempty(ii),
+                    if ~isempty(ii)
                         Ev_Cav.data(ii,:)=''; % Tolgo le detezione di valanghe nell'intervallo degli eventi esplosivi
-                    if isempty(Ev_Cav.data),
+                    if isempty(Ev_Cav.data)
                         break
                     end
 
@@ -625,13 +626,13 @@ while 1
 
         i=size(Ev_Cav.data,1);
         while 1
-            if i<=0,
+            if i<=0
                 break
             end 
             ti=Ev_Cav.data(i,1);
             te=Ev_Cav.data(i,2);
             ii=find(Ev_Cav.data(:,1)>=ti & Ev_Cav.data(:,1)<=te);
-            if length(ii)>1,
+            if length(ii)>1
                 Ev_Cav.data(ii(ii~=i),:)='';
                 i=size(Ev_Cav.data,1)-1;
             else
@@ -657,7 +658,7 @@ while 1
     %endSandro    
         
     %%%%%%%%% CAV
-    if size(Ev_Cav.data,1)>0,
+    if size(Ev_Cav.data,1)>0
 		disp('Cav Detected')
         %%%%%%%%%% WYSSEN POST
         try
@@ -701,7 +702,7 @@ while 1
 
     i=size(Ev_Nav.data,1);
     while 1
-        if i<=0,
+        if i<=0
             break
         end  
 
@@ -709,7 +710,7 @@ while 1
         te=Ev_Nav.data(i,2);
 
         ii=find(Ev_Nav.data(:,1)>=ti & Ev_Nav.data(:,1)<=te);
-        if length(ii)>1,
+        if length(ii)>1
             Ev_Nav.data(ii(ii~=i),:)='';
             i=size(Ev_Nav.data,1)-1;
         else
@@ -718,7 +719,7 @@ while 1
     end
         
     %%%%%%%% NAV
-    if size(Ev_Nav.data,1)>0,
+    if size(Ev_Nav.data,1)>0
 		disp('Nav Detected')   
         %%%%%%%%%% WYSSEN POST 
         try                  
@@ -881,7 +882,30 @@ while 1
     
     if offline==1
         toc
-        iad_plot_results_matfiles
+%         iad_plot_results_matfiles
+        if Ev_Av.data(1,1)~=0
+            
+            for ital=1:size(Ev_Av.data,1)
+
+                IDAtimeUTC(ital)={datestr(Ev_Av.data(ital,1),'dd/mm/yyyy HH:MM:SS')};
+                IDAdur(ital)=round(Ev_Av.data(ital,3));
+                IDAprs(ital)=round(1000*Ev_Av.data(ital,6));
+                IDAbkz(ital)=round(Ev_Av.data(ital,8));
+                IDAbkz1(ital)=round(Ev_Av.data(ital,20));
+                IDAbkz2(ital)=round(Ev_Av.data(ital,21));
+                IDAvelme(ital)=round(Ev_Av.data(ital,10));
+                IDAvelma(ital)=round(Ev_Av.data(ital,11));
+                IDAveltr(ital)=round(Ev_Av.data(ital,19));
+
+            end
+            IDAtimeUTC=IDAtimeUTC';
+            IDAdur=IDAdur';
+            IDAprs=IDAprs';
+            IDAbkz=IDAbkz';IDAbkz1=IDAbkz1';IDAbkz2=IDAbkz2';
+            IDAvelme=IDAvelme';IDAvelma=IDAvelma';IDAveltr=IDAveltr';
+            T=table(IDAtimeUTC,IDAdur,IDAprs,IDAbkz,IDAbkz1,IDAbkz2,IDAvelme,IDAvelma,IDAveltr)
+        end
+            
         break
     end
 %       pause(60)      

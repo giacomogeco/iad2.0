@@ -6,7 +6,7 @@ function out=iad_readWYACserverdata(station,namestz,t1,t2,f1,f2)
 % t2=datenum(2018,11,20,17,10,0);
 % namestz='LVN';
 % flag_filt=false;
-if nargin<5,
+if nargin<5
     flag_filt=false;
 else
     flag_filt=true;
@@ -19,7 +19,7 @@ switch namestz
     case 'RPC'
         id={'7903','7907','7919','7915','7911'};
     case 'LPB'
-        id={'7875','7879','7863','7867'};
+        id={'7875','7871','7879','7863','7867'};
     case 'RSP'
         id={'7883','7887','7891','7899', '7895'};
     case 'HRM'
@@ -39,7 +39,7 @@ end
 key='zC8AqKrpAw-8tHawJGiDT-R80ab1PRic';
 limit='3000';
 struct='false';
-json='false';
+json='true';
 server='https://control.wyssenavalanche.com/app/api/ida/raw.php?';
 
 disp(['Selected Data: ',datestr(t1(1),13),' - ',datestr(t2(end),13)])
@@ -99,16 +99,26 @@ for i=1:length(id)
 %         et=toc;
 %         disp(['Wysse Server response time: ' , num2str(et),' s'])
         if strcmp(json,'true')
-%             disp('json dataset')
             
-            a=jsondecode(S);
-            if isempty(a.values)
-                continue
+            try
+                a=jsondecode(S);
+                a=a.values;
+                time=a(:,1);
+                time=datenum(1970,1,1)+time'/(86400*1000);
+                dato=a(:,2)';
+            catch
+                disp('json dataset')
+                disp('error jsondecode') 
+                a=strsplit(S, {',',';'});
+                a=a(1:end-1);
+                time=str2num(cell2mat(a(1:2:end)));
+                time=datenum(1970,1,1)+time'/86400;
+
+                dato=str2num(cell2mat(a(2:2:end)));
+                dato=dato*25/2^16;
+                disp('!!! dato*25/2^16 !!!')
+
             end
-            a=a.values;
-            time=a(:,1);
-            time=datenum(1970,1,1)+time'/(86400*1000);
-            dato=a(:,2)';
         else
             a=strsplit(S, {',',';'});
             a=a(1:end-1);
@@ -158,6 +168,7 @@ end
 t=out.tt;
 out=rmfield(out,'tt');
 mtrx=cell2mat(struct2cell(out));
+% station.sensors
 mtrx=mtrx(station.sensors>0,:);
 emptychk=sum(mtrx,1);
 if sum(isnan(emptychk))==size(emptychk,2)

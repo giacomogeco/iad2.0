@@ -4,7 +4,7 @@
 % data=iad_read_ws_data(ConfFileName,working_dir,slh,net,to,tend,[],[]);
 clear D
 % tfiles=(floor(FROM*1440/15))*15/1440:15/1440:(ceil(TO*1440/15))*15/1440;
-tfiles=[FROM TO];
+tfiles=[FROM TO+1/1440];
 % tfiles=tfiles(1:end-1);
 
 for irc=1:length(station.wschannels)
@@ -69,7 +69,7 @@ tv=data.tt;
 global T0
 T0=data.tt(1);TEND=data.tt(end);
 
-load([working_dir,slh,'tmp',slh,station.eventfile]);
+% load([working_dir,slh,'tmp',slh,station.eventfile]);
 
 % for ich=1:length(station.wschannels)+1
 %     if ich==length(station.wschannels)+1
@@ -86,16 +86,10 @@ for irc=1:length(station.wschannels)
     M=cat(1,M,data.(char(station.wschannels(irc))));
 end
 % M=M';
-
-
-
-size(M)
 iactive=station.sensors==1;
 M=M(iactive,:);
-size(M)
 tt0=tv;
 Ms=sum(M,1);i=isfinite(Ms);M=M(:,i);tt=tv(i);
-
 
 F=station.ex_frequencyband;
 % F=[1 5];
@@ -104,42 +98,12 @@ Wp=[F(1) F(2)]/(station.smp(1)/2);
 % [b,a] = cheby1(station.av_filterorder,station.av_filterripple,Wp);
 [b,a] = cheby1(station.ex_filterorder,station.ex_filterripple,Wp);
 
-% Mmax=repmat(max(M'),[size(M,2) 1]);
-% M=1.2*M./Mmax';
-% M=Mf+M;
-
-% close all
-% figure,plot(filtrax(M(1,:),1,10,50)),grid on
-% hold on
-% plot(filtrax(Mf(1,:),1,20,50),'r')
-
 
 %%
 % close all
 FIG=figure;set(FIG,'name','GeCo AVALANCHES ACOUSTIC DETECTOR (by GeCo srl)',...
     'color','w','numbertitle','off')
 clear axx
-% %%%% LOGO %%%%%
-% % This creates the 'background' axes
-% rat=858/945;
-% ha = axes('units','normalized', ...
-%             'position',[.2 .2 .6 .6/rat]);
-% % Move the background axes to the bottom
-% uistack(ha,'bottom');
-% % Load in a background image and display it using the correct colors
-% % The image used below, is in the Image Processing Toolbox.  If you do not have %access to this toolbox, you can use another image file instead.
-% I=imread(['img',slh,'LOGO_SPINOFF.png']);
-% hi = imagesc(I);
-% set(hi,'Alphadata',.3)
-% colormap gray
-% % Turn the handlevisibility off so that we don't inadvertently plot into the axes again
-% % Also, make the axes invisible
-% set(ha,'handlevisibility','off', ...
-%             'visible','off')
-% % Now we can use the figure, as required.
-% % For example, we can put a plot in an axes
-% % axes('position',[0.3,0.35,0.4,0.4])
-% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 tts=86400*(tt-T0);
 axx(1)=subplot(511);
@@ -158,10 +122,10 @@ for i=1:size(M,1)
     p1=plot(tts,Mf(i,:)+(i-1)*mxx,'color',[.7 .7 .7]);hold on
 end
 
-if Ev_Av.data(1,1)~=0,
+if Ev_Av.data(1,1)~=0
     plot(86400*(Ev_Av.data(:,1)-T0),zeros(size(Ev_Av.data,1),1),'dc','Linewidth',2)
     hold on
-    for i=1:size(Ev_Av.data,1),
+    for i=1:size(Ev_Av.data,1)
         
         line([86400*(Ev_Av.data(i,1)-T0),86400*(Ev_Av.data(i,2)-T0)],...
          [0,0],'color','c','Linewidth',2)
@@ -171,10 +135,10 @@ else
 end
 
 leg_string{1}='Infrasound';
-if size(Ev_Ex.data,1)>0,
+if size(Ev_Ex.data,1)>0
     plot(86400*(Ev_Ex.data(:,1)-T0),zeros(size(Ev_Ex.data,1),1),'sy','Linewidth',2)
     hold on
-    for i=1:size(Ev_Ex.data,1),
+    for i=1:size(Ev_Ex.data,1)
         line([86400*(Ev_Ex.data(i,1)-T0),86400*(Ev_Ex.data(i,2)-T0)],...
          [0,0],'color','y','Linewidth',2)
     end
@@ -225,9 +189,15 @@ ylabel('Pressure (Pa)')
 % hl=legend(leg_string,'FontName','Bitstream charter','Fontsize',12);
 
 
-
+Ev_Av
+Ev_Nav
+Ev_Ex
+Ev_Cav
 global E
-E.Ev_Av=Ev_Av;E.Ev_Nav=Ev_Nav;E.Ev_Ex=Ev_Ex;E.Ev_Cav=Ev_Cav;
+E.Ev_Av=Ev_Av;
+E.Ev_Nav=Ev_Nav;
+E.Ev_Ex=Ev_Ex;
+E.Ev_Cav=Ev_Cav;
 
 %% detections
 th=floor(T0*24)/24:1/24:floor(TEND*24)/24;

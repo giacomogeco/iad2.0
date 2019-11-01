@@ -1,5 +1,5 @@
 function [detections,EVENTS,dts,evts]=iad_detections2events_exp(station,DT,L,txx,prs,cc,azz,slw,rs,Fp,iexp,shift)
-
+% (DT,L,txx,prs,cc,azz,slw,rs,Fp,iexp,shift)
 % ii=find(isfinite(prs)==1 & prs>station.ex_minpressure);
 % ii=find(isfinite(prs)==1); % modificato 2017-02-22 !!!
 

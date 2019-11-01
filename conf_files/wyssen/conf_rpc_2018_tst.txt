@@ -50,7 +50,7 @@ station.mail_pub_logfile=[station.name,'_pub_mail.log'];
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	%%%%%%%%%%%%%%%%%% MCCA %%%%%%%%%%%%%%%%%%
 station.arrayfile='IDA-RPC-2018.mat';		%…coordinate
-station.sensors=[1 1 1 1 1];
+station.sensors=[1 1 0 1 1];
 %	——> EXPLOSIONS DETECTIONS <——
 station.ex_resampling=1;
 station.ex_minconsistency=0.07;
@@ -83,14 +83,14 @@ station.av_azmaxstd=20;		%... degree, massima deviaszione standard tra i triango
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	%%%%%%%%%%%%%%%%% EXPLOSIONS & CONTROLLED AVALANCHES EVENTS & Towers %%%%%%%%%%%%%%%%%%
 station.ExplYes=1;
-station.twr_baz=[235,245;335,345;170,180]; % °N respect to t
+station.twr_baz=[235,245;335,348;165,180]; % °N respect to t
 station.twr_name={'GP6','GP5','GP7'};	% nomi torri
-station.ex_minpressure=0.1;						% Pa, Soglia di ampiezza delle esplosioni
+station.ex_minpressure=0.05;						% Pa, Soglia di ampiezza delle esplosioni
 station.ex_index=[10,25];						% Pa, Soglia di ampiezza delle esplosioni
-station.ex_maxappvel=335;                   % m/s, Soglia di velocità apparente
+station.ex_maxappvel=355;                   % m/s, Soglia di velocità apparente
 station.cav_maxlag=2;                       % min,lag max tra un'esplosione ed una Controlled Avalanches 
 station.cav_minlag=8;
-station.cav_minpressure=0.05;
+station.cav_minpressure=0.002;
 station.cav_azlag=360;                       % N°, differenza assoluta tra l'azimuth medio dell'esplosione e l'azimuth della potenziale valanga
 station.cav_minduration=10;                 % sec, durata minima di una valanga controllata
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

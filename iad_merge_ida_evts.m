@@ -1,5 +1,5 @@
 function iad_merge_ida_evts
-global FROM dtsA evsA
+global FROM dtsA evsA eVts station
 % clear all
 close all
 
@@ -13,12 +13,13 @@ nownames=FROM:1/24:T0;
 nfile=length(nownames);
 % stz={'rp1','no1','no2','no3','fru','gm2','gms','prt'};
 % stz={'gm2','gms','gtn'};
+% stz={'rsp','lpb','rpc','hrm'};
 stz={'hrm'};
 
 nstz=length(stz);
 
-DT=2.51;
-L=20;
+DT=0.31;
+L=8;
 
 
 for istz=1:nstz
@@ -27,8 +28,18 @@ for istz=1:nstz
 
         for i=1:nfile
             filename=[char(stz(istz)),'_',datestr(nownames(i),'yyyymmdd_HHMMSS'),'.csv'];
-            fileA=[wpath,char(stz(istz)),'_Det_Av/',char(stz(istz)),'_',datestr(nownames(i),'yyyymmdd'),'/',...
+%             filename=['rp2','_',datestr(nownames(i),'yyyymmdd_HHMMSS'),'.csv'];
+
+
+%             fileA=[wpath,char(stz(istz)),'_Det_Av/',char(stz(istz)),'_',datestr(nownames(i),'yyyymmdd'),'/',...
+%                 filename];
+
+            station.ex_index=[0 200];
+            station.ex_minpressure=0;
+            fileA=[wpath,char(stz(istz)),'_Det_Ex/',char(stz(istz)),'_',datestr(nownames(i),'yyyymmdd'),'/',...
                 filename];
+%             fileA=[wpath,char(stz(istz)),'_Det_Av/',char(stz(istz)),'_',datestr(nownames(i),'yyyymmdd'),'/',...
+%                 filename];
             disp(fileA)
             try
                 urlwrite(fileA,'pippo.csv');
@@ -38,18 +49,17 @@ for istz=1:nstz
                 end
                 [tx,j]=unique(VarName1);
                 tt=tx;
+%                 return
+%                 [~,~,dts,~]=iad_detections2events(DT,L,tt',VarName2(j),VarName7(j),VarName3(j),VarName5(j),VarName9(j),VarName8(j),VarName10(j),.5);
                 
-                [~,~,dts,~]=iad_detections2events(DT,L,tt',VarName2(j),VarName7(j),VarName3(j),VarName5(j),VarName9(j),VarName8(j),VarName10(j),.5);
+                [~,~,dts,~]=iad_detections2events_exp(station,DT,L,tt',VarName2(j),VarName7(j),VarName3(j),VarName5(j),VarName9(j),VarName8(j),VarName10(j),.3);
                     
                 DTS.(char(stz(istz)))=cat(2,DTS.(char(stz(istz))),dts);
                 
             catch
-                disp(['...file not founded'])
-                
-            end
-                     
-        end
-        
+                disp(['...file not founded'])                
+            end                    
+        end       
     end
 %      
     dtsA.(char(stz(istz))).time=DTS.(char(stz(istz)))(1,:);
@@ -59,6 +69,8 @@ for istz=1:nstz
     dtsA.(char(stz(istz))).smb=DTS.(char(stz(istz)))(7,:);
     dtsA.(char(stz(istz))).cns=DTS.(char(stz(istz)))(3,:);
     dtsA.(char(stz(istz))).fpk=DTS.(char(stz(istz)))(5,:);
+    
+    dtsA.(char(stz(istz))).iex=DTS.(char(stz(istz)))(8,:);
  
 end
 % dtsA.hrm
@@ -67,8 +79,10 @@ working_dir=pwd;
 slh='/';
 net='wyssen';
 
+
+
 %%
-DT=2.51;L=40;
+% DT=2.51;L=40;
 for istz=1:nstz   
     [~,~,~,eVts]=iad_detections2events(DT,L,dtsA.(char(stz(istz))).time,...
         dtsA.(char(stz(istz))).prs',...
@@ -269,7 +283,3 @@ for i=1:length(ax)
         set(ax(i),'xtick',xt,'xticklabel',datestr(t(1)+xt/86400,dtklabel))
     end
 end
-
-return
-% % 
-% % 

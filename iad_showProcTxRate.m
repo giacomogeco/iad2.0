@@ -1,3 +1,4 @@
+clear all,close all
 
 stz='hrm';
 
@@ -34,7 +35,7 @@ F1=figure;set(F1,'Color','w','pos',[15 40 1400 770])
 % Pressure
 p=plot(trate,txrate,'ok');set(p,'markersize',4,'markerfacecolor','r')
 grid on
-set(gca,'FontSize',14)
+set(gca,'FontSize',14,'xlim',[t1 t2])
 
 
 

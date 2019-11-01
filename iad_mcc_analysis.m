@@ -130,7 +130,7 @@ for j=Ind,
                 %... filtro
 %                 datf=filtfilt(fp(1,:),fp(2,:),dat(in,:));
                 %... interpolo
-                if nmux>1,
+                if nmux>1
                     pp(in,:)=spline(t1,datf(in,:),t2);
                 else
                     pp(in,:)=datf(in,:);
@@ -141,24 +141,29 @@ for j=Ind,
             
             %... cross correlation analysis assuming plane wave front 
             
-            [pmx,cmax,az,azsd,va,vasd,RR,~,ffp,iex,cex]=iad_locator_planewave(pp,...
+            [pmx,pdx, cmax,az,azsd,va,vasd,RR,~,ffp,iex,cex]=iad_locator_planewave(pp,...
                 maxl,trplts,fi,...
                 xstzi,ystzi,minR,cps,bkzmaxstd,station,type);
             
+%             % iserimento pdx parametro
+%             [pmx, pdx, cmax,az,azsd,va,vasd,RR,~,ffp,iex,cex]=iad_locator_planewave(pp,...
+%                 maxl,trplts,fi,...
+%                 xstzi,ystzi,minR,cps,bkzmaxstd,station,type);
+            
+%             size(pdx)
             az=az*180/pi;
                 
 %             sum(isfinite(az))
             
-            if ~isnan(az),
+            if ~isnan(az)
                 azz(iframe,fi)=az;
                 azzsd(iframe,fi)=azsd;
                 slw(iframe,fi)=va;
                 slwsd(iframe,fi)=vasd;
                 prs(iframe,fi)=pmx;
-                
+%                 pd(iframe,:)=pdx;               
 %                 cc(iframe,fi)=cex;
-                cc(iframe,fi)=cmax;
-                
+                cc(iframe,fi)=cmax;               
                 rs(iframe,fi)=RR;
                 Fp(iframe,fi)=ffp;
                 Iex(iframe,fi)=iex;
@@ -166,11 +171,9 @@ for j=Ind,
 %                 azz(iframe,fi)=1000;
             end
         end
-        
-        
     end
 %     size(prs),iframe
-    if isnan(prs(iframe,1)),
+    if isnan(prs(iframe,1))
     else
         snr(iframe)=20*log10(abs(prs(iframe,1))/noise);
     end
@@ -178,14 +181,26 @@ for j=Ind,
 end
 % close(h)
 
+% size(pd)
+
 finestra=sh;
 txx=round(txx*86400/finestra)/(86400/finestra);
 % sum(isfinite(azz))
 
 D.data=[txx(~isnan(azz)),prs(~isnan(azz)),azz(~isnan(azz)),azzsd(~isnan(azz)),slw(~isnan(azz)),...
     slwsd(~isnan(azz)),cc(~isnan(azz)),Fp(~isnan(azz)),rs(~isnan(azz)),Iex(~isnan(azz))];
+
+% D.data=[txx(~isnan(azz)),prs(~isnan(azz)),azz(~isnan(azz)),azzsd(~isnan(azz)),slw(~isnan(azz)),...
+%     slwsd(~isnan(azz)),cc(~isnan(azz)),Fp(~isnan(azz)),rs(~isnan(azz)),Iex(~isnan(azz)),...
+%     pd(~isnan(azz),:)];
+
 D.legend={'1.time';'2.pressure';'3.backazimuth';'4.backazimuth_sd';'5.velocity';...
     '6.velocity_sd';'7.semblance';'8.frequency_peak';'9.consistency';'10.ExplosionIndex'};
+
+% iserimento pdx parametro
+% D.legend={'1.time';'2.pressure';'3.backazimuth';'4.backazimuth_sd';'5.velocity';...
+%     '6.velocity_sd';'7.semblance';'8.frequency_peak';'9.consistency';'10.ExplosionIndex';...
+%     '11. Sensor s pressure (Pa)'};
 
 clear txx prs azz azzsd slw slwd cc Fp rs
 D.info=info;

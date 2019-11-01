@@ -5,7 +5,7 @@ station.smp=[50 50 50 50];
 station.chname={'m1','m2','m3','m4', 'm5'};
 station.advoltage=5;   %... Volt
 station.adbit=16;       %... bit
-station.gain=[.2 .2 .2 .2 .2];
+station.gain=[0.2 0.2 0.2 0.2 0.2];
 station.filter=[.1 10;.1 10;.1 10;.1 10];
 station.drumshift=[1 1 1 1];    %... UM
 station.resampling=[1 1 1 1];
@@ -72,12 +72,12 @@ station.av_shift=0.5;
 station.av_taper=20;
 station.av_frequencyband=[1 5];
 station.av_min_dets_length=10;
-station.av_min_dets_continuity=2.55;
+station.av_min_dets_continuity=1.05;
 station.av_trplts='';                
 station.av_maxlag=0.6;  	%... seconds                
 station.av_filterorder=4;
 station.av_filterripple=0.02; 
-station.av_azmaxstd=20;		%... degree, massima deviaszione standard tra i triangoli
+station.av_azmaxstd=120;		%... degree, massima deviaszione standard tra i triangoli
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	%%%%%%%%%%%%%%%%% EXPLOSIONS & CONTROLLED AVALANCHES EVENTS & Towers %%%%%%%%%%%%%%%%%%
 station.ExplYes=0;
@@ -94,7 +94,7 @@ station.cav_minduration=1;                 % sec, durata minima di una valanga c
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	%%%%%%%%%%%%%%%%%% AVALANCHES EVENTS %%%%%%%%%%%%%%%%%%
 %>>>>>>>>>>>>>> TODO thresholds calibratio
-station.nav_minpressure=[0.02 0.05];     % Pa, pressione minima di un evento naturale
+station.nav_minpressure=[0.02 0.03];     % Pa, pressione minima di un evento naturale
 station.nav_mindur=[20 35];          % sec, durata minima di un evento naturale
 station.nav_maxvel=[600 600];         % m/s, velocitÃ  media massima di un evento naturale
 station.nav_meanvel=[390 390];         % m/s, velocitÃ  media di un evento naturale
@@ -127,8 +127,3 @@ station.sms_list_item={};
 station.sms_list_customer={};
 station.mailthreshold_minpressure=station.nav_minpressure(2);
 station.mailthreshold_minduration=station.nav_mindur(2);                           %... seconds
-
-
-
-
-

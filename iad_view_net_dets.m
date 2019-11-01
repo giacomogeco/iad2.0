@@ -8,7 +8,7 @@ T0=datenum(TO,'yyyy-mm-dd_HH');
 nownames=FROM:1/24:T0;
 nfile=length(nownames);
 % stz={'rp1','no1','no2','no3','fru','gm2','gms','prt'};
-stz={'rsp','lpb','rpc','hrm'};
+stz={'gtn'};
 nstz=length(stz);
 
 for istz=1:nstz

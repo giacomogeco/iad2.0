@@ -4,11 +4,11 @@ data=eventdata';
 
 
 ii=find(data(1,:)>=date);
-if isempty(ii),
+if isempty(ii)
     return
 else
     data=data(:,ii);
-    if ~isempty(torretta),
+    if ~isempty(torretta)
         torretta=torretta(ii);
     end
 end
