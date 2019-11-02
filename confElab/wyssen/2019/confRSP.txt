@@ -1,0 +1,67 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%% REAL-TIME DATA SERVER PARAMETERS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+station.key='zC8AqKrpAw-8tHawJGiDT-R80ab1PRic';
+station.limit='1000';
+station.struct='true';
+station.json='false';
+station.server='https://control.wyssenavalanche.com/app/api/ida/raw.php?';
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%% ELABORATION (MCCA) PARAMETERs %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+station.clockoffset=0;
+station.lag=10;
+station.smp=50;
+station.spikeremove=[0 50];
+station.sensors=[1 1 1 1 1];	%... active sensors 
+%	> EXPLOSIONS DETECTIONS <
+station.ex_resampling=1;
+station.ex_minconsistency=0.07;
+station.ex_window=5;
+station.ex_shift=0.3;
+station.ex_taper=20;
+station.ex_frequencyband=[1 15];
+station.ex_min_dets_length=9;
+station.ex_min_dets_continuity=0.31;
+station.ex_trplts='';                
+station.ex_maxlag=0.6;  	%... seconds                
+station.ex_filterorder=3;                     
+station.ex_filterripple=0.02; 
+station.ex_azmaxstd=120;		
+%	> AVALANCHES DETECTIONS <
+station.noisezones=[];				% remove raw detections from a noisy sector
+station.av_resampling=1;
+station.av_minconsistency=0.05;
+station.av_window=5;
+station.av_shift=0.5;
+station.av_taper=20;
+station.av_frequencyband=[1 7];
+station.av_min_dets_length=10;
+station.av_min_dets_continuity=1.55;
+station.av_trplts='';                
+station.av_maxlag=0.6;  	%... seconds                
+station.av_filterorder=3;
+station.av_filterripple=0.02; 
+station.av_azmaxstd=120;
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%% THRESHOLDS EXPLOSIONS & CONTROLLED AVALANCHES EVENTS %%%%%%%%%%%%%%%%%
+station.ExplYes=1;
+station.twr_baz=[30,50;230,250];		
+station.twr_name={'GP11','GP12'};		% gun names
+station.ex_minpressure=0.1;			% Pa, max amplitude of Ex
+station.ex_index=[10,25];			% ms, Ex index rangeGun events
+station.ex_maxappvel=350;			% m/s, maximum app. vel. of 
+station.cav_maxlag=2;				% min lag between Ex & Ac (sec)
+station.cav_minlag=8;				% min lag between Ex & Ac (sec)	
+station.cav_minpressure=0.02;			% Pa
+station.cav_azlag=360;				% °N 			
+station.cav_minduration=10;			% sec, minimum duration of Ac
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%% THRESHOLDS NATURAL AVALANCHES EVENTS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+station.nav_minpressure=[0.1 0.05];		% Pa, minimum Na pressure
+station.nav_mindur=[20 40];			% sec, minimum durations of Na events 
+station.nav_maxvel=[600 600];			% m/s, max maximum app. vel. of Na events
+station.nav_meanvel=[450 450];			% m/s, max average app. vel. of Na events
+station.nav_minvel=[280 280];			% m/s, min minimum app. vel. of Na events
+station.nav_maxbazstd=[100 100];		% degree, max difference  between start and end back-azimuths of Na events
+station.nav_maxveltrend=[-0.3 -0.3];		% [-1 1], app. vel. trends of Na events
+station.nav_shadowzones=[60,85;243,253];	% no shadow sector
+station.zonefilename='';			% for the zone location 

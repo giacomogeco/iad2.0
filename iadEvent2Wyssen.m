@@ -1,8 +1,6 @@
-function [status,result] = iadEvent2Wyssen(station,Event,Type,offline)
-
+function [status,result] = iadEvent2Wyssen(array,station,Event,Type,offline)
 % Event=evnts;
 % Type='Ex';
-
 % # -*- coding: utf-8 -*-
 % import requests
 % url = 'https://control.wyssenavalanche.com/app/api/ida/...'
@@ -12,9 +10,8 @@ function [status,result] = iadEvent2Wyssen(station,Event,Type,offline)
 % https://control.wyssenavalanche.com/app/api/ida/new-event.php
 % Please also insert the key in your post data!!!
 % key = "zC8AqKrpAw-8tHawJGiDT-R80ab1PRic"
-
-% reliability
-if strcmp(Type,'Nav')
+global working_dir slh
+if strcmp(Type,'Nav') % reliability
     if Event.data(:,17)==1
         reliability='H';
     else
@@ -23,37 +20,30 @@ if strcmp(Type,'Nav')
 else
     reliability='H';
 end
-
 if strcmp(Type,'Nav')
     if ~isempty(station.zonefilename)  
         [~,sector]=iad_norway_zones_location(Event.data(20),Event.data(21),station.zonefilename);
-        disp(sector)
+        disp(['>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ',sector])
     else
         sector='Null';
     end 
 end
-
 if strcmp(Type,'Ex')
     sector=char(Event.torretta);
 end
 if strcmp(Type,'Cav')
     sector='Null';
 end
-
-
 tpost=now;
 % %... LOG FILE
-wys.logdir=[pwd,'/log/iadEvents2Wyssen/',lower(station.name),'/'];
-wys.logfilename=['pyWys_',lower(station.name),'_',datestr(Event.data(1),'yyyymmdd_HHMMSS'),'_',Type,'.py'];
+wys.logdir=[working_dir,slh,'log',slh,'iadEvents2Wyssen',slh,lower(char(array.stationName)),slh];
+wys.logfilename=['pyWys_',lower(char(array.stationName)),'_',datestr(Event.data(1),'yyyymmdd_HHMMSS'),'_',Type,'.py'];
 filepy=[wys.logdir,...
     wys.logfilename];
 %     pysend_gry_20170308_100049565_Nav.py
 wys.url = 'https://control.wyssenavalanche.com/app/api/ida/new-event.php';
 wys.apikey = 'zC8AqKrpAw-8tHawJGiDT-R80ab1PRic';
-
-
 fid=fopen(filepy,'w', 'native', 'UTF-8');
-
 fwrite(fid,'# -*- coding: utf-8 -*-');
 fprintf(fid,'\n');
 fwrite(fid,'import requests');
@@ -66,7 +56,6 @@ fprintf(fid,'\n');
 fwrite(fid,['url = ','"',...
     wys.url,'"']);
 fprintf(fid,'\n');
-
 % data = dict(type='Nav', rtime='2017-12-05T12:43:22', dur=45.6, amp=187, sector='NULL', bkzOn=234.6, bkzEnd=256.3, bkzAv=242.5,
 %             freq1=3.2, freq2=2.7, rel=H, sname=?RP2?, sid=7963)
 fwrite(fid,['data = dict(',...
@@ -82,26 +71,24 @@ fwrite(fid,['data = dict(',...
     ['freq1 = ',num2str(round(Event.data(1,13))),', '],...
     ['freq2 = ',num2str(round(Event.data(1,23))),', '],...
     ['rel = "',reliability,'", '],...
-    ['sname = "',char(upper(station.name)),'", '],...
-    ['sid = ',num2str(station.sid)],...
+    ['sname = "',char(upper(array.stationName)),'", '],...
+    ['sid = ',char(array.id)],...
     ')']);
 fprintf(fid,'\n');
-
 fwrite(fid,['r = requests.post(url, ', ...
     ['data=data',', '],...
     'allow_redirects=True)']);
 fprintf(fid,'\n');
-
 fwrite(fid,'print(r.content)');
 fclose(fid);
-
 % disp(['python ',wys.logdir,wys.logfilename,' &'])
-if offline==0
-    [status,result] = system(['python ',wys.logdir,wys.logfilename,' &']);
+if ~offline
+    disp(['>>>>>>>>>>> WARNING CODE REM FOR THE REALTIME PROCESSING SENDING ',Type,' ALERT <<<<<<<<<<<<<<<<'])
+%     [status,result] = system(['python ',wys.logdir,wys.logfilename,' &']);
+%     disp(['>>>>>>>>>>> REALTIME PROCESSING SENDING ',Type,' ALERT <<<<<<<<<<<<<<<<'])
 else
+    disp(['>>>>>>>>>>> OffLine processing no ',Type,' Alert Sent <<<<<<<<<<<<<<<<'])
     status=NaN;
     result=NaN;
 end
-
-
 return

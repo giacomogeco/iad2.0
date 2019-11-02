@@ -1,4 +1,4 @@
-function iad_setcurrLIM(hh,ee,t,ax) 
+function iadSetCurXlim(hh,ee,t,ax) 
 
 axon=get(gcf,'currentaxes');
 xlim=get(axon,'xlim');
@@ -15,15 +15,15 @@ if dt>7*86400
     step=86400; 
 end
 
-if dt>15*60 && dt<1*86400 
+if dt>3600 && dt<1*3600*3 
     tformat=15;
     step=300;
 end
 
-if dt>15*60 && dt<1*86400 
-    tformat=15;
-    step=390;
-end
+% if dt>15*60 && dt<1*86400 
+%     tformat=15;
+%     step=60;
+% end
 
 if dt<15*60
     tformat=13;

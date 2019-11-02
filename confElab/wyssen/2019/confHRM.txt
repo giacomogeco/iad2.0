@@ -1,0 +1,136 @@
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%% STATION PARAMETERS %%%%%%%%%%%%%%%%%%
+station.name='hrm';
+station.smp=[50 50 50 50 50];
+station.chname={'m1','m2','m3','m4', 'm5'};
+station.advoltage=5;   %... Volt
+station.adbit=16;       %... bit
+station.gain=[0.2 0.2 0.2 0.2 0.2];
+station.filter=[0.1 10;0.1 10;0.1 10;0.1 10];
+station.drumshift=[1 1 1 1 1];    %... UM
+station.resampling=[1 1 1 1 1];
+station.figuresdir='/figures/';
+station.network='WYSSEN IDA Network';
+station.legend={'Pa','Pa','Pa','Pa'};
+station.legendvalue={'1','1','1','1','1'};
+station.amplification=[1 1 1 1 1];
+station.noisezones=[];
+station.spikeremove=[0 50];
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%% WINSTON PARAMETERS %%%%%%%%%%%%%%%%%%
+station.wslocation='';
+station.wschannels={'m1','m2','m3','m4', 'm5'};	% !!!!!!!!! NB intorto per stazioni Beni
+station.wsnetwork='';
+station.wsstation='HRM';
+station.wspinnumber={};
+station.wsserver='';
+station.wsport=0;
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%% WYSSEN SERVER PARAMETERS %%%%%%%%%%%%%%%
+station.key='zC8AqKrpAw-8tHawJGiDT-R80ab1PRic';
+station.limit='1000';
+station.struct='true';
+station.json='false';
+station.server='https://control.wyssenavalanche.com/app/api/ida/raw.php?';
+station.id=[7847 7851 7855 7859 7827];
+station.sid=7831;
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%% PROCESSING PARAMETERS & LOGFILES %%%%%%%%%%%%%%%%%%
+station.clockoffset=0;
+station.det2dB_flag=false;
+station.lag=50; % il 40-esimo secondo del minuto esatto
+station.last5min_det_file=[station.name,'_last5min_det.mat'];
+station.eventfile=[station.name,'_events.mat'];
+station.logfile=[station.name,'.log'];
+station.elab_logfile=[station.name,'_last5min_det.log'];
+station.mail_ex_logfile=[station.name,'_ex_mail.log'];
+station.mail_av_logfile=[station.name,'_av_mail.log'];
+station.mail_pub_logfile=[station.name,'_pub_mail.log'];
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%% MCCA %%%%%%%%%%%%%%%%%%
+station.arrayfile='IDA-HRM-2018.mat';		%â¦coordinate
+station.sensors=[1 1 1 0 1];
+%	ââ> EXPLOSIONS DETECTIONS <ââ
+station.ex_resampling=1;
+station.ex_minconsistency=0.07;
+station.ex_window=5;
+station.ex_shift=0.3;
+station.ex_taper=20;
+station.ex_frequencyband=[1 15];
+station.ex_min_dets_length=7;
+station.ex_min_dets_continuity=0.31;
+station.ex_trplts='';                
+station.ex_maxlag=0.6;  	%... seconds                
+station.ex_filterorder=3;                     
+station.ex_filterripple=0.02; 
+station.ex_azmaxstd=60;		%... degree, massima deviazione standard tra i triangoli
+%	ââ> AVALANCHES DETECTIONS <â-
+station.av_resampling=1;
+station.av_minconsistency=0.05;
+station.av_window=5;
+station.av_shift=0.5;
+station.av_taper=20;
+station.av_frequencyband=[1 7];
+station.av_min_dets_length=10;
+%station.av_min_dets_continuity=1.55;
+station.av_min_dets_continuity=1.55;	% tuned on dec 21 2018
+station.av_trplts='';                
+station.av_maxlag=0.6;  	%... seconds                
+station.av_filterorder=3;
+station.av_filterripple=0.02; 
+station.av_azmaxstd=120;		%... degree, massima deviaszione standard tra i triangoli
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%% EXPLOSIONS & CONTROLLED AVALANCHES EVENTS & Towers %%%%%%%%%%%%%%%%%%
+%TODO gun position
+station.ExplYes=0;
+%station.twr_baz=[68,83]; % 1
+station.twr_baz=[80,108]; % tuned 2018-12-19
+station.twr_name={'GP4-GP3-GP2'};	% nomi torri
+station.ex_minpressure=0.02;						% Pa, Soglia di ampiezza delle esplosioni
+station.ex_index=[10,25];						% Pa, Soglia di ampiezza delle esplosioni
+station.ex_maxappvel=340;                   % m/s, Soglia di velocitÃ  apparente
+station.cav_maxlag=2;                       % min,lag max tra un'esplosione ed una Controlled Avalanches 
+station.cav_minlag=8;
+station.cav_minpressure=0.002;
+station.cav_azlag=360;                       % NÂ°, differenza assoluta tra l'azimuth medio dell'esplosione e l'azimuth della potenziale valanga
+station.cav_minduration=10;                 % sec, durata minima di una valanga controllata
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%% AVALANCHES EVENTS %%%%%%%%%%%%%%%%%%
+station.nav_minpressure=[0.1 0.05];     % Pa, pressione minima di un evento naturale
+station.nav_mindur=[20 40];          % sec, durata minima di un evento naturale
+station.nav_maxvel=[600 600];         % m/s, velocitÃ  media massima di un evento naturale
+station.nav_meanvel=[430 430];         % m/s, velocitÃ  media di un evento naturale
+station.nav_minvel=[250 250];		% Â°, min velocity di un evento naturale
+station.nav_maxbazstd=[100 100];		% Â°, std of backazimuths di un evento naturale
+station.nav_maxveltrend=[-0.3 -0.3];		% Â°, std of backazimuths di un evento naturale
+station.nav_shadowzones=[0,0.001];
+station.zonefilename='';
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%% MYSQL PARAMETER %%%%%%%%%%%%%%%%%%
+station.dB_Nav_name=[lower(station.name),'_natural'];
+station.dB_Ex_name=[lower(station.name),'_explosions'];
+station.dB_Cav_name=[lower(station.name),'_avalanches'];
+station.dBhost='localhost';
+station.dBuser='wwsuser';
+station.dBpassword='wwspass';
+station.dBname='W_events';
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%% ALERT MAILS & SMS %%%%%%%%%%%%%%%%%%
+station.mailserver='mail.item-geophysics.it';
+station.mailsender='info@item-geophysics.it';
+station.mailsenderpsw='waveworm';
+station.mail_avalanches_flag=0;
+station.mail_explosions_flag=0;
+station.mailing_list_item={'IAD@smshosting.it'};
+station.mailing_list_customer={};
+station.sms_avalanches_flag=0;
+station.sms_explosions_flag=0;
+station.sms_list_item={};
+station.sms_list_customer={};
+station.mailthreshold_minpressure=station.nav_minpressure(2);
+station.mailthreshold_minduration=station.nav_mindur(2);                           %... seconds
+
+
+
+
+

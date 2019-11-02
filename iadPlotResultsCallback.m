@@ -1,0 +1,26 @@
+function output_txt = iadPlotResultsCallback(hh,event_obj,E ,FROM)
+% Display the position of the data cursor
+% obj          Currently not used (empty)
+% event_obj    Handle to event object
+% output_txt   Data cursor text string (string or cell array of strings).
+pos = get(event_obj,'Position');
+if ~isempty(E.tim)
+    ts=86400*(E.tim-FROM);
+    ts=floor(ts*10)/10;
+    dt = abs(ts - pos(1));
+%     floor(pos(1)*10)/10
+    j = find(dt<1);
+end
+if ~isempty(j)    
+    output_txt = {['Type: ',char(E.type(j))], ...
+    ['Time: ',datestr(FROM+pos(1)/86400)], ...
+    ['Pressure: ',num2str(round(E.amp(j)*100)/100),' Pa'], ...
+    ['Baz_av: ',num2str(round(E.bkzAv(j)*10)/10),' N'], ...
+    ['Baz_start: ',num2str(round(E.bkzOn(j)*10)/10),' N'], ...
+    ['Baz_end: ',num2str(round(E.bkzEnd(j)*10)/10),' N'], ...
+    ['Duration: ',num2str(round(E.dur(j)*10)/10),' sec'], ...
+    ['Frequency: ',num2str(round(E.f2(j)*10)/10),' Hz'],...
+    ['Reliability: ',num2str(char(E.rel(j)))]};
+end
+return
+

@@ -380,7 +380,7 @@ while 1,
             Det_Ex.data(:,1)',...   % time
             Det_Ex.data(:,2),...    % pressure (Pa)
             Det_Ex.data(:,7),...    % semblance (0-1)
-            Det_Ex.data(:,3),...    % backazimuth (�N)
+            Det_Ex.data(:,3),...    % backazimuth (???N)
             Det_Ex.data(:,5),...    % app. vel. (m/s)
             Det_Ex.data(:,9),...    % consistency (s)
             Det_Ex.data(:,8),...    % pick frequency (Hz)
@@ -461,7 +461,7 @@ while 1,
                 Det_Av.data(:,1)',...   % time
                 Det_Av.data(:,2),...    % pressure (Pa)
                 Det_Av.data(:,7),...    % semblance (0-1)
-                Det_Av.data(:,3),...    % backazimuth (�N)
+                Det_Av.data(:,3),...    % backazimuth (???N)
                 Det_Av.data(:,5),...    % app. vel. (m/s)
                 Det_Av.data(:,9),...    % consistency (s)
                 Det_Av.data(:,8),...    % pick frequency (Hz)
@@ -486,7 +486,7 @@ while 1,
                 ii=find(Ev_Cav.data(:,1)>0 & Ev_Cav.data(:,6)>0  & Ev_Cav.data(:,3)>station.cav_minduration);    %% ?????????????????????????????????
                 Ev_Cav.data=Ev_Cav.data(ii,:); % filtro in ampiezza (per ora nn si sta usando)
 
-                %% Trova tra gli eventi di valanga compatibilit� temporale ed azimuthale con le esplosioni
+                %% Trova tra gli eventi di valanga compatibilit??? temporale ed azimuthale con le esplosioni
                 k=0;
                 for icav=size(Ev_Cav.data,1):-1:1,
                     ff=Ev_Cav.data(icav,1)-Ev_Ex.data(:,1);
@@ -502,7 +502,7 @@ while 1,
                             azza=Ev_Cav.data(icav,8);
                             zz=abs(rad2deg(abs(atan2(sind(azz-azza), cosd(azz-azza)))));
                             
-                            izz=find(zz<station.cav_azlag); % Compatibilit� in azimuth
+                            izz=find(zz<station.cav_azlag); % Compatibilit??? in azimuth
                             
                             if isempty(izz),
                                 k=k+1;
@@ -575,7 +575,7 @@ while 1,
                     Ev_Nav.data(:,19)<station.nav_maxveltrend(2) & ...                                      %... App. Vel. "trend"
                     Ev_Nav.data(:,10)<station.nav_meanvel(2) & ...                  %... App. Vel.
                     Ev_Nav.data(:,10)>station.nav_minvel(2) | ...                     %... App. Vel.
-                   (Ev_Nav.data(:,3)>100 & Ev_Nav.data(:,6)>.8));  % se dura più di 100s e la pressione supera 0.2                     
+                   (Ev_Nav.data(:,3)>100 & Ev_Nav.data(:,6)>.8));  % se dura pi?? di 100s e la pressione supera 0.2                     
 				
                 if ~isempty(ideterministic)
                     %... Associao probabili 100% (high probability) a gli eventi sopra la seconda soglia
@@ -733,7 +733,7 @@ while 1,
             'Ev_Ex','Ev_Nav','Ev_Cav')
 
        % log file
-        if tt(end)>0,
+        if tt(end)>0
             fid=fopen([working_dir,slh,'log',slh,station.logfile],'w');
             fwrite(fid,datestr(tt(end),'yyyymmdd_HHMMSS'));
             disp([station.logfile,' created: ',datestr(tt(end),'yyyymmdd_HHMMSS')])
@@ -748,17 +748,17 @@ while 1,
 
 
 	% MAIL ALERT EXPLOSIONS
-        iad_sendmail_explosions
+%         iad_sendmail_explosions
         
-	iad_sendmail_avalanches_customer_v2017
+% 	iad_sendmail_avalanches_customer_v2017
 	% MAIL ALERT CONTROLLED
-	iad_sendmail_controlled_customer
+% 	iad_sendmail_controlled_customer
 
-	iad_sendmail_avalanches_item
+% 	iad_sendmail_avalanches_item
 	
         
     end %   fine ciclo last minute file
-    if offline==1;
+    if offline==1
         toc
         iad_plot_results_matfiles
         break

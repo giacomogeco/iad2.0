@@ -3,10 +3,8 @@ function [detections,EVENTS,dts,evts]=iad_detections2events(DT,L,txx,prs,cc,azz,
 ii=find(isfinite(prs)==1);
 txx=txx(ii);prs=prs(ii);cc=cc(ii);azz=azz(ii);slw=slw(ii);
 rs=rs(ii);Fp=Fp(ii);
-
 n1=length(txx);
-disp(['... ',num2str(n1),' Detections'])
-
+disp(['.............................. ',num2str(n1),' Detections'])
 %.... 1 ....%
 %... calcolo la lunghezza delle detezioni
 dt=diff((txx*86400));  % decimi di sec
@@ -22,14 +20,13 @@ for i=1:length(ij)
 end
 txx(Index)=''; prs(Index)='';rs(Index)=''; azz(Index)='';
 Fp(Index)=''; slw(Index)=''; cc(Index)='';
-disp(strcat(num2str(length(Index)),' detections removed'))
-
+disp(['.............................. ', num2str(length(Index)),' detections removed'])
 %.... 2 ....%
 dt=diff((txx*86400));
 ij=find(dt>DT);
 ti=[0,ij]+1;
 tf=ij;tf=[tf,length(txx)];
-disp(strcat(num2str(n1-length(Index)),' detections remaining'))
+disp(['.............................. ', num2str(n1-length(Index)),' detections remaining'])
 
 dts=vertcat(txx,prs',rs',azz',Fp',slw',cc');
 
@@ -43,7 +40,8 @@ detections.consistency=rs';
 % detections=vertcat(txx,prs',rs',azz',Fp',slw',cc');
 
 
-Pm=zeros(1,length(ti));Pd=Pm;Pmax=Pm;Pmin=Pm;
+Pm=[];%zeros(1,length(ti));
+Pd=Pm;Pmax=Pm;Pmin=Pm;
 Sm=Pm;Smax=Pm;Sd=Pm;Smin=Pm;Str=Pm;D=Pm;
 Am=Pm;Ad=Pm;
 Fm=Pm;Fd=Pm;Fam=Pm;Fmin=Pm;Fmax=Pm;
@@ -55,9 +53,9 @@ Prb=Pm;
 Iexp=Pm;
 Sia=Pm;Siv=Pm;
 
-if isempty(txx),
-    tti=0;ttf=0;
-    disp('no events')
+if isempty(txx)
+    tti=[];ttf=[];
+    disp('.............................. No events')
     EVENTS=[];
     evts.data=vertcat(tti',ttf',D,Cm,Cd,Pmax,Pd,Am,azvar,Sm,Smax,Str,Fm,Fd,Rm,Rd,Prb,Sia,Siv,Amin,Amax,Iexp,Fmin,Fam);
     
@@ -66,7 +64,7 @@ if isempty(txx),
     '10.Velocity media';'11.Velocity max';'12.Velocity STD';'13.Frequenza media';'14.Frequenza STD';...
     '15.Consistenza media';'16.Consistenza STD';'17.Probability';'18.Az. Stability index';...
     '19.Vel. Stability index';'20.Az. start';'21.Az end';'22.Isexplosion';...
-    '23. Frequenza minima';'23. Frequenza Iniziale'};
+    '23. Frequenza minima';'24. Frequenza Iniziale'};
     return
     
 else
@@ -115,10 +113,9 @@ else
         Smax(i)=nanmax(ss);
         Smin(i)=nanmin(ss);
         
-        if D(i)>40
-            ixxx=find(twi<twi(1)+40/86400);
+        if D(i)>60
+            ixxx=find(twi<twi(1)+60/86400);
             [RR,ZZ]=corrcoef(twi(ixxx),ss(ixxx));%... inserito il 16 Gen 2017 - modificato a 60 sec 12 dec 2018
-
         else
             [RR,ZZ]=corrcoef(twi,ss);%... inserito il 16 Gen 2017
 %             Siv(i)=RR(2,1);if isnan(Siv(i)), Siv(i)=0; end        
@@ -177,10 +174,14 @@ else
         
         ttPmax(i)=twi(iPm);
 
+        Sia(i)=NaN;
+        Prb(i)=NaN;
+
     end
-    tti=txx(ti)';ttf=txx(tf)';
-    disp(strcat(num2str(length(tti)),' events'))
-    
+    tti=ceil(txx(ti)'*86400)/86400;
+    ttf=ceil(txx(tf)'*86400)/86400;
+
+    disp(['.............................. ',num2str(length(tti)),' events'])
 %     close(h)
 end
 
@@ -235,7 +236,7 @@ evts.legend={'1.Tempo inizio finestra';'2.Tempo fine finstra';'3.Durata';'4.Coer
     '10.Velocity media';'11.Velocity max';'12.Velocity STD';'13.Frequenza media';'14.Frequenza STD';...
     '15.Consistenza media';'16.Consistenza STD';'17.Probability';'18.Az. Stability index';...
     '19.Vel. Stability index';'20.Az. start';'21.Az end';'22.Isexplosion';...
-    '23. Frequenza minima';'23. Frequenza Iniziale'};
+    '23. Frequenza minima';'24. Frequenza Iniziale'};
 
 
 

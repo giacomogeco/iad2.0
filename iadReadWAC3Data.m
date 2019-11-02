@@ -1,23 +1,18 @@
-function out=iad_readWYACserverdata(array,station,t1,t2)
-
+function out=iadReadWAC3Data(array,station,t1,t2)
 % clear all
 % t1=datenum(2018,11,20,17,0,0);
 % t2=datenum(2018,11,20,17,10,0);
 % namestz='LVN';
 % flag_filt=false;
+o = weboptions('CertificateFilename','');
 id=array.snid;
 t1s=t1-1/1440;
 t2s=t2+1/1440;
-key='zC8AqKrpAw-8tHawJGiDT-R80ab1PRic';
-limit='3000';
-struct='false';
-json='true';
-server='https://control.wyssenavalanche.com/app/api/ida/raw.php?';
-disp(['Selected Data: ',datestr(t1(1),13),' - ',datestr(t2(end),13)])
+% disp(['Selected Data: ',datestr(t1(1),13),' - ',datestr(t2(end),13)])
 dt=1/(86400*50);
 out.tt=t1:dt:t2-dt;
-texactc=round(out.tt*86400*50);
-disp([num2str(length(out.tt)),' samples'])
+texactc=round(out.tt*86400*station.smp);
+% disp([num2str(length(out.tt)),' samples'])
 tv=t1s:1/(1440):t2s;
 for i=1:length(id)
     t=[];
@@ -33,25 +28,23 @@ for i=1:length(id)
         tmax1=datestr(tmaxv,'yyyy-mm-dd');
         tmax2=datestr(tmaxv,'HH:MM:SS');
         tmaxv=[tmax1,'%20',tmax2];   
-        string=[server,...
-        'key=',key,...
+        string=[station.server,...
+        'key=',station.key,...
         '&id=', idi,...
-        '&limit=',limit,...
+        '&limit=',station.limit,...
         '&tmin=',tminv,...
         '&tmax=',tmaxv,...
-        '&struct=',struct];
-        disp(string)
+        '&struct=',station.struct];
         ktry=0;
         while 1      
             try
-                S = urlread(string,'Timeout',2);      
+                S = webread(string,o);     
                 break
             catch
                 disp('!!! Warning conection Timeout !!!')
                 ktry=ktry+1;
                 pause(5)
-            end
-            
+            end          
             if ktry==2
                 v=[];
                 t=[];
@@ -61,13 +54,14 @@ for i=1:length(id)
         if isempty(S)
             continue
         end
-        if strcmp(json,'true')            
+        if station.json            
             try
                 a=jsondecode(S);
                 a=a.values;
                 time=a(:,1);
                 time=datenum(1970,1,1)+time'/(86400*1000);
                 dato=a(:,2)';
+%                 dato=dato*25/2^16;
             catch
                 disp('json dataset')
                 disp('error jsondecode') 
@@ -76,7 +70,7 @@ for i=1:length(id)
                 time=str2num(cell2mat(a(1:2:end)));
                 time=datenum(1970,1,1)+time'/86400;
                 dato=str2num(cell2mat(a(2:2:end)));
-                dato=dato*25/2^16;
+%                 dato=dato*25/2^16;
                 disp('!!! dato*25/2^16 !!!')
             end
         else
@@ -107,7 +101,8 @@ for i=1:length(id)
     troundc=round(t*86400*50);
     [~,i1,i2] = intersect(troundc,texactc);
     d(i2)=v(i1);
-    out.(['m',num2str(i)])=d;   
+%     out.(['m',num2str(i)])=d;
+    out.(char(id(i)))=d;
 %     disp(['IDA-ID: ', char(id(i))])
 %     ngaps=sum(isnan(out.(['m',num2str(i)])));
 %     disp(['nGaps = ',num2str(ngaps),' samples'])   

@@ -1,18 +1,10 @@
-function [detections,EVENTS,dts,evts]=iad_detections2events_exp(station,DT,L,txx,prs,cc,azz,slw,rs,Fp,iexp,shift)
-% (DT,L,txx,prs,cc,azz,slw,rs,Fp,iexp,shift)
-% ii=find(isfinite(prs)==1 & prs>station.ex_minpressure);
-% ii=find(isfinite(prs)==1); % modificato 2017-02-22 !!!
+function [detections,EVENTS,dts,evts]=iadGroupingDets(DT,L,txx,prs,cc,azz,slw,rs,Fp,iexp,shift)
 
-vec=prs+azz+slw;
-ii=find(isfinite(vec)==1 & ...
-    iexp>=station.ex_index(1) & iexp<=station.ex_index(2) & ...
-    prs>station.ex_minpressure);
-
-txx=txx(ii);prs=prs(ii);cc=cc(ii);azz=azz(ii);slw=slw(ii);rs=rs(ii);Fp=Fp(ii);iexp=iexp(ii);
-
+ii=find(isfinite(prs)==1);
+txx=txx(ii);prs=prs(ii);cc=cc(ii);azz=azz(ii);slw=slw(ii);
+rs=rs(ii);Fp=Fp(ii);
 n1=length(txx);
 disp(['.............................. ',num2str(n1),' Detections'])
-
 %.... 1 ....%
 %... calcolo la lunghezza delle detezioni
 dt=diff((txx*86400));  % decimi di sec
@@ -27,26 +19,8 @@ for i=1:length(ij)
     Index=[Index,index];
 end
 txx(Index)=''; prs(Index)='';rs(Index)=''; azz(Index)='';
-Fp(Index)=''; slw(Index)=''; cc(Index)='';iexp(Index)='';
+Fp(Index)=''; slw(Index)=''; cc(Index)='';
 disp(['.............................. ', num2str(length(Index)),' detections removed'])
-
-%%%%%%%%%%%%%% Modified by G Nov 2017 %%%%%%%%%%%%%%%%%%%%%%%%
-% di=diff(iexp'~=0);  % decimi di sec
-% ij=find(di>0); %... indici dei Iex non "continui" 
-% ti=[0,ij]+1;
-% tf=ij;tf=[tf,length(iexp)];
-% le=tf-ti+1;   %... number of detections
-% ij=find(le<station.ex_min_dets_continuity);
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%% RIPULISTI SCATTER BKZ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Index=[];
-% for i=1:length(ij)
-%     index=(ti(ij(i)):tf(ij(i)));
-%     Index=[Index,index];
-% end
-% txx(Index)=''; prs(Index)='';rs(Index)=''; azz(Index)='';
-% Fp(Index)=''; slw(Index)=''; cc(Index)='';iexp(Index)='';
-
 %.... 2 ....%
 dt=diff((txx*86400));
 ij=find(dt>DT);
@@ -54,7 +28,7 @@ ti=[0,ij]+1;
 tf=ij;tf=[tf,length(txx)];
 disp(['.............................. ', num2str(n1-length(Index)),' detections remaining'])
 
-dts=vertcat(txx,prs',rs',azz',Fp',slw',cc',iexp');
+dts=vertcat(txx,prs',rs',azz',Fp',slw',cc');
 
 detections.time=txx;
 detections.pressure=prs';
@@ -63,10 +37,7 @@ detections.velocity=slw';
 detections.peakfrequency=Fp';
 detections.coherence=cc';
 detections.consistency=rs';
-detections.isexplosion=iexp';
 % detections=vertcat(txx,prs',rs',azz',Fp',slw',cc');
-
-
 
 
 Pm=[];%zeros(1,length(ti));
@@ -89,20 +60,24 @@ if isempty(txx)
     evts.data=vertcat(tti',ttf',D,Cm,Cd,Pmax,Pd,Am,azvar,Sm,Smax,Str,Fm,Fd,Rm,Rd,Prb,Sia,Siv,Amin,Amax,Iexp,Fmin,Fam);
     
     evts.legend={'1.Tempo inizio finestra';'2.Tempo fine finstra';'3.Durata';'4.Coerenza media';...
-        '5.Coerenza STD';'6.Pressione max';'7.Pressione STD';'8.Azimuth medio';'9. Max. Azimuth Variation';...
-        '10.Velocity media';'11.Velocity max';'12.Velocity STD';'13.Frequenza media';'14.Frequenza STD';...
-        '15.Consistenza media';'16.Consistenza STD';'17.Probability';'18.Az. Stability index';...
-        '19.Vel. Stability index';'20.Az. start';'21.Az end';'22.Isexplosion';
-        '23. Frequenza minima';'24. Frequenza Iniziale'};
-    return   
+    '5.Coerenza STD';'6.Pressione max';'7.Pressione STD';'8.Azimuth medio';'9. Max. Azimuth Variation';...
+    '10.Velocity media';'11.Velocity max';'12.Velocity STD';'13.Frequenza media';'14.Frequenza STD';...
+    '15.Consistenza media';'16.Consistenza STD';'17.Probability';'18.Az. Stability index';...
+    '19.Vel. Stability index';'20.Az. start';'21.Az end';'22.Isexplosion';...
+    '23. Frequenza minima';'24. Frequenza Iniziale'};
+    return
+    
 else
 %     h = waitbar(0,'Please wait...');
     for i=1:length(ti)
 %         waitbar(i / length(ti))
         idx=ti(i):tf(i);
+%         if length(idx)<L,
+%             continue
+%         end
         ff=Fp(idx);
         ss=slw(idx);
-        ss=iad_hampel(1:length(ss),ss);
+        ss=iad_hampel(1:length(ss),ss);%ss=ss';
         
         aa=azz(idx)';
         aa=iad_hampel(1:length(aa),aa);aa=aa';
@@ -127,7 +102,7 @@ else
         
         %... pressure parameters
         [Pmax(i),iPm]=max(pp);
-        Pm(i)=median(pp);
+        Pm(i)=mean(pp);
         Pmin(i)=min(pp);
         Pd(i)=std(pp);
         
@@ -137,45 +112,48 @@ else
         Sd(i)=nanstd(ss);
         Smax(i)=nanmax(ss);
         Smin(i)=nanmin(ss);
-        [RR,ZZ]=corrcoef(twi,ss);%... inserito il 16 Gen 2017
-       	Siv(i)=RR(2,1);if isnan(Siv(i)), Siv(i)=0; end
-%         Sav(i)=NaN; 
         
+        if D(i)>30+5
+            ixxx=find(twi>twi(1)+30/86400);
+            tstep = twi(ixxx(1)):5/86400:twi(end);
+            siv = zeros(1,length(tstep));
+            for istep = 1:length(tstep)
+                ii =  find(twi <= tstep(istep));
+                [RR,~] = corrcoef(twi(ii),ss(ii));
+                siv(istep)=RR(2,1);if isnan(siv(istep)), siv(istep)=0; end 
+            end
+            Siv(i) = min(siv);
+        else
+            [RR,~]=corrcoef(twi,ss);%... inserito il 16 Gen 2017
+            Siv(i)=RR(2,1);if isnan(Siv(i)), Siv(i)=0; end        
+        end
         if length(twi)<9
             Str(i)=0;
         else
-            npol=round(length(ss));
+            npol=round(length(ss)/3);
             Str(i)=iad_detections_trends([twi;ss']',twi(1),twi(end),npol);
         end
-        
-        
-%         [azvar(i),Str(i)]=detections2migration(aa,ss);
-%         [Str(i),azvar(i),Atrend(i)]=detections2downhillcoeff(ss,aa,L);
-        
         %... azimuth parameters
         Am(i) = circ_median(aa(1:end)*pi/180,2);    %... azimuth medio
+        Amin(i) = aa(1);    %... azimuth start
+        Amax(i) = aa(end);    %... azimuth end
         
-%         if length(twi)<9
-%             azvar(i)=0;
-%         else
-%             npol=round(length(ss));
-%             azvar(i)=iad_detections_trends([twi;unwrap(aa)]',twi(1),twi(end),npol);
-%         end
-        
+        azvar(i)=atan2(sind(aa(1)-aa(end)), cosd(aa(1)-aa(end)));
+        [RR,ZZ]=corrcoef(twi,aa); %... inserito il 16 Gen 2017
+       	Sia(i)=RR(2,1);
         
         Atrend(i)=NaN;  %... clock/underclock wise migration
 %         daz=rad2deg(abs(atan2(sind(circ_median(aa(end-5:end)*pi/180,2)-circ_median(aa(1:5)*pi/180,2)),...
 %             cosd(circ_median(aa(end-5:end)*pi/180,2)-circ_median(aa(1:5)*pi/180,2)))));
-        Amin(i)=aa(1);
-        Amax(i)=aa(end);
-        azvar(i)=atan2(sind(aa(1)-aa(end)), cosd(aa(1)-aa(end)));
+%         Amin(i)=aa(1);
+%         Amax(i)=aa(end);
         
 %         [X,Y] = pol2cart(aa,3e3);
 %         Atrend(i)=ispolycw(X,Y);
         %... frequency parameters
         Fm(i)=nanmedian(ff);
         Fd(i)=nanstd(ff);
-        Fam(i)=ff(1);
+        Fam(i)=ff(iPm);
         Fmax(i)=nanmax(ff);
         Fmin(i)=nanmin(ff);
         
@@ -191,14 +169,16 @@ else
     end
     tti=ceil(txx(ti)'*86400)/86400;
     ttf=ceil(txx(tf)'*86400)/86400;
-    disp(['.............................. ', num2str(length(tti)),' events'])
-    
+
+    disp(['.............................. ',num2str(length(tti)),' events'])
 %     close(h)
 end
 
 
 Am(Am<0)=Am(Am<0)+2*pi;Am=rad2deg(Am);
-% azvar=rad2deg(azvar);
+% Amin(Amin<0)=Amin(Amin<0)+2*pi;Amin=rad2deg(Amin);
+% Amax(Amax<0)=Amax(Amax<0)+2*pi;Amax=rad2deg(Amax);
+% % azvar=rad2deg(azvar);
 
 EVENTS.timeon=tti';
 EVENTS.timeend=ttf';
@@ -225,7 +205,7 @@ EVENTS.meanvelocity=Sm;
 EVENTS.maxvelocity=Smax;
 EVENTS.stdvelocity=Sd;
 EVENTS.minvelocity=Smin;
-EVENTS.velocitytrend=Str;
+% EVENTS.velocitytrend=St\r;
 % EVENTS.angularvelocity=Sav;
 
 EVENTS.meanfrequency=Fm;
@@ -236,16 +216,19 @@ EVENTS.maxamplitudefrequency=Fmin;
 
 EVENTS.meanconsistency=Rm;
 EVENTS.maxconsistency=Rd;
-% tti',ttf',D,Cm,Cd,Pmax,Pd,Am,azvar,Sm,Smax,Str,Fm,Fd,Rm,Rd,Prb,Sia,Siv,Amin,Amax,Iexp,Fmin,Fam
-events=vertcat(tti',ttf',D,Cm,Cd,Pmax,Pd,Am,azvar,Sm,Smax,Str,Fm,Fd,Rm,Rd,Prb,Sia,Siv,Amin,Amax,Iexp,Fmin,Fam);
-
-evts.data=events';    
+try
+    events=vertcat(tti',ttf',D,Cm,Cd,Pmax,Pd,Am,azvar,Sm,Smax,Str,Fm,Fd,Rm,Rd,Prb,Sia,Siv,Amin,Amax,Iexp,Fmin,Fam);
+catch
+    disp('stop')
+end
+evts.data=events';
 evts.legend={'1.Tempo inizio finestra';'2.Tempo fine finstra';'3.Durata';'4.Coerenza media';...
     '5.Coerenza STD';'6.Pressione max';'7.Pressione STD';'8.Azimuth medio';'9. Max. Azimuth Variation';...
     '10.Velocity media';'11.Velocity max';'12.Velocity STD';'13.Frequenza media';'14.Frequenza STD';...
     '15.Consistenza media';'16.Consistenza STD';'17.Probability';'18.Az. Stability index';...
-    '19.Vel. Stability index';'20.Az. start';'21.Az end';'22.Isexplosion';
-    '23. Frequenza minima';'23. Frequenza Iniziale'};
+    '19.Vel. Stability index';'20.Az. start';'21.Az end';'22.Isexplosion';...
+    '23. Frequenza minima';'24. Frequenza Iniziale'};
+
 
 
 % events=vertcat(tti',ttf',ttPmax,tAZmax,...  %... (1-4) TEMPI
