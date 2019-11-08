@@ -7,11 +7,12 @@ station.json='false';
 station.server='https://control.wyssenavalanche.com/app/api/ida/raw.php?';
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%% ELABORATION (MCCA) PARAMETERs %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-station.clockoffset=0;
+station.clockoffset=1;
 station.lag=10;
 station.smp=50;
 station.spikeremove=[0 50];
 station.sensors=[1 1 1 1 1];	%... active sensors 
+station.rawDetBuffer = 10;	%... minutes
 %	> EXPLOSIONS DETECTIONS <
 station.ex_resampling=1;
 station.ex_minconsistency=0.07;
@@ -27,7 +28,7 @@ station.ex_filterorder=3;
 station.ex_filterripple=0.02; 
 station.ex_azmaxstd=120;		
 %	> AVALANCHES DETECTIONS <
-station.noisezones=[];				% remove raw detections from a noisy sector
+station.noisezones=[];			
 station.av_resampling=1;
 station.av_minconsistency=0.05;
 station.av_window=5;
@@ -49,7 +50,7 @@ station.twr_name={'GP11','GP12'};		% gun names
 station.ex_minpressure=0.1;			% Pa, max amplitude of Ex
 station.ex_index=[10,25];			% ms, Ex index rangeGun events
 station.ex_maxappvel=350;			% m/s, maximum app. vel. of 
-station.cav_maxlag=2;				% min lag between Ex & Ac (sec)
+station.cav_maxlag=2;				% min lag between Ex & Ac (min)
 station.cav_minlag=8;				% min lag between Ex & Ac (sec)	
 station.cav_minpressure=0.02;			% Pa
 station.cav_azlag=360;				% °N 			
@@ -61,7 +62,7 @@ station.nav_mindur=[20 40];			% sec, minimum durations of Na events
 station.nav_maxvel=[600 600];			% m/s, max maximum app. vel. of Na events
 station.nav_meanvel=[450 450];			% m/s, max average app. vel. of Na events
 station.nav_minvel=[280 280];			% m/s, min minimum app. vel. of Na events
-station.nav_maxbazstd=[100 100];		% degree, max difference  between start and end back-azimuths of Na events
+station.nav_maxbazstd=[100 100];
 station.nav_maxveltrend=[-0.3 -0.3];		% [-1 1], app. vel. trends of Na events
 station.nav_shadowzones=[60,85;243,253];	% no shadow sector
 station.zonefilename='';			% for the zone location 

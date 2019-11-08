@@ -35,6 +35,8 @@ for i=1:length(id)
         '&tmin=',tminv,...
         '&tmax=',tmaxv,...
         '&struct=',station.struct];
+    
+    disp(string)
         ktry=0;
         while 1      
             try
@@ -54,7 +56,7 @@ for i=1:length(id)
         if isempty(S)
             continue
         end
-        if station.json            
+        if strcmp(station.json,'true')
             try
                 a=jsondecode(S);
                 a=a.values;
@@ -79,7 +81,8 @@ for i=1:length(id)
             time=str2num(cell2mat(a(1:2:end)));
             time=datenum(1970,1,1)+time'/86400;
             dato=str2num(cell2mat(a(2:2:end)));
-            dato=dato*5/2^16;
+            dato=dato*25/2^16;
+%             disp('!!! dato*25/2^16 !!!')
         end
         t=cat(2,t,time);
         v=cat(2,v,dato);

@@ -5,13 +5,8 @@ clear global
 close all
 clc
 % net='wyssen';namestz='rsp';winter = '2018';offline = true;    %... Test 04-Jan-2019 01:10:00 - 04-Jan-2019 03:50:00 ok
-net='wyssen';namestz='lpb';winter = '2018';offline = true;
+% net='wyssen';namestz='lpb';winter = '2018';offline = true;
 % net='wyssen';namestz='hrm';winter = '2018';offline = true;
-
-% net='wyssen';namestz='gtn';winter = '2019';offline = false;   %... test1 ok
-% net='wyssen';namestz='lvn';winter = '2019';offline = false;   %... test1 ok
-% net='wyssen';namestz='hrm';winter = '2019';offline = false;
-% net='wyssen';namestz='lpb';winter = '2019';offline = false;
 warning off
 save([namestz,'_temp.mat'],'net','namestz','winter','offline')
 %%%%%%%%%% SET PATHS %%%%%%%%%%%
@@ -387,7 +382,7 @@ while 1
                 k = 0;
                 iD = [];
                 for ido = 1:length(LastCavStartTime)
-                    ii = find(Ev_Nav.data(:,1) >= LastCavStartTime(ido) & Ev_Nav.data(:,1) < LastCavStartTime(ido) + LastCavDur(ido)/86400);
+                    ii = find(Ev_Nav.data(:,1) >= LastCavStartTime(ido) && Ev_Nav.data(:,1) < LastCavStartTime(ido) + LastCavDur(ido)/86400);
                     if ~isempty(ii)
                         k = k + 1;
                         iD(k) = ii;

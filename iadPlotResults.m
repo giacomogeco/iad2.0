@@ -33,7 +33,7 @@ if nh>0
         end
     end
     if isempty(dataEx)
-        Ex.time=T0;Ex.prs=0;Ex.bkz=0;Ex.bkzsd=0;Ex.vel=0;Ex.velsd=0;Ex.smb=0;Ex.fpk=0;Ex.cns=0;Ex.iex=0;
+        Ex.time=TO;Ex.prs=0;Ex.bkz=0;Ex.bkzsd=0;Ex.vel=0;Ex.velsd=0;Ex.smb=0;Ex.fpk=0;Ex.cns=0;Ex.iex=0;
     else
         for i=1:size(dataEx,2)
             eval(['VarName',num2str(i),'=dataEx(:,',num2str(i),');'])
@@ -52,7 +52,7 @@ if nh>0
         Ex.iex=cat(1,Ex.iex,VarName10(j));
     end
     if isempty(dataAv)
-        Av.time=T0;Av.prs=0;Av.bkz=0;Av.bkzsd=0;Av.vel=0;Av.velsd=0;Av.smb=0;Av.fpk=0;Av.cns=0;Av.iex=0;
+        Av.time=TO;Av.prs=0;Av.bkz=0;Av.bkzsd=0;Av.vel=0;Av.velsd=0;Av.smb=0;Av.fpk=0;Av.cns=0;Av.iex=0;
     else
         for i=1:size(dataAv,2)
             eval(['VarName',num2str(i),'=dataAv(:,',num2str(i),');'])

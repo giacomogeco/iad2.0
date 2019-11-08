@@ -3,7 +3,7 @@
 station.key='zC8AqKrpAw-8tHawJGiDT-R80ab1PRic';
 station.limit='1000';
 station.struct='true';
-station.json='false';
+station.json='true';
 station.server='https://control.wyssenavalanche.com/app/api/ida/raw.php?';
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%% ELABORATION (MCCA) PARAMETERs %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -11,8 +11,8 @@ station.clockoffset=0;
 station.lag=20;
 station.smp=50;
 station.spikeremove=[0 50];
-station.sensors=[1 1 1 1 1];
-station.rawDetBuffer = 5;	%... minutes
+station.sensors=[1 1 1 1 0];
+station.rawDetBuffer = 10;	%... minutes
 %	> EXPLOSIONS DETECTIONS <
 station.ex_resampling=1;
 station.ex_minconsistency=0.07;

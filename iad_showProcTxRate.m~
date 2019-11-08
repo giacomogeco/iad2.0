@@ -96,26 +96,25 @@ first = datenum(2018,11,1);
 last = datenum(2019,5,31,23,0,0);
 period=1/24;
 bins = period*(floor(first/period):ceil(last/period));
-time=bins(1:end)';
 [LVNrate, loc] = histc(f1.trateT', bins);
 LVNrate = accumarray(loc,f1.txrateM,size(time),@mean,NaN);
 [NO1rate, loc] = histc(f2.trateT', bins);
-NO1rate = accumarray(loc,f2.txrateM,size(time),@mean,NaN);
+NO1rate = accumarray(loc,f1.txrateM,size(time),@mean,NaN);
 [NO2rate, loc] = histc(f3.trateT', bins);
-NO2rate = accumarray(loc,f3.txrateM,size(time),@mean,NaN);
-
+NO2rate = accumarray(loc,f1.txrateM,size(time),@mean,NaN);
+time=bins(1:end)';
 
 F1=figure;set(F1,'Color','w','pos',[15 40 1400 770])
 ax(1)=subplot(311);
-p=plot(time,LVNrate*100,'sk');
+p=plot(f1.trateT,f1.txrateM,'sk');
 set(p,'markersize',2,'markerfacecolor','r')
 grid on
 ax(2)=subplot(312);
-p=plot(time,NO1rate*100,'ks');
+p=plot(f2.trateT,f2.txrateM,'sk');
 set(p,'markersize',2,'markerfacecolor','r')
 grid on
 ax(3)=subplot(313);
-p=plot(time,NO2rate*100,'ks');
+p=plot(f3.trateT,f3.txrateM,'sk');
 set(p,'markersize',2,'markerfacecolor','r')
 grid on
 set(ax,'FontSize',14)

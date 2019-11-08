@@ -86,7 +86,7 @@ for isn = 1 : nIDA
 end
 %     
 % ids=fieldnames(STS);
-
+return
 %%
 % clr={'r','g','b','c','m','k','y','w','r'};
 % c=colormap('jet');
@@ -115,9 +115,9 @@ for isn = 1 : length(idaID)
 %     tt=[];aa=[];
     
 end
-tRT=[now-1/24-10/1440 now-1/24];
-set(gca,'xtick',1 : length(idaID),'XTickLabel',idaNameShort,'ylim',tRT,...
-    'ytick',tRT(1):1/1440:tRT(2),'YTickLabel',datestr(tRT(1):1/1440:tRT(2),15))
+T=now;
+set(gca,'xtick',1 : length(idaID),'XTickLabel',idaNameShort,'ylim',[T-30 T],...
+    'ytick',T-30:7:T,'YTickLabel',datestr(T-30:7:T,6))
 % set(gca,'xlim',[FROM T0+1/24],'ylim',[9 16])
 % datetick('y',12,'keeplimits')
 grid on
